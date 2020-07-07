@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap");
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --header-color: #212445;
+}
+
+body {
+  background-color: #042224;
+  color: #ffffff;
+  font-family: "Open Sans Condensed", sans-serif;
+}
+.header {
+  background-color: black;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.header-menu ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+}
+.header-menu ul li {
+  padding: 1em;
+  cursor: pointer;
+  color: brown;
+  transition: color 1000ms ease-in-out;
+}
+.header-menu ul li:hover {
+  color: yellowgreen;
+}
+.hamburger-menu-icon {
+  display: none;
+}
+.logo-text-2 {
+  color: lightcoral;
+}
+.header-search input {
+  padding: 0.2em 1em;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: brown;
+  color: whitesmoke;
+  font-weight: 700;
+}
+.header-search input:focus {
+  color: yellowgreen;
+}
+.genres {
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.genres option {
+  background-color: black;
+  color: yellowgreen;
+  border: none;
+}
+.genres select {
+  background-color: black;
+  padding: 0 1em 0 0.5em;
+  margin: 0 1em;
+  color: yellowgreen;
+  border: none;
+}
+.genres select:focus {
+  color: yellowgreen;
+  outline: none;
+}
+.show-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.show-wrapper h1 {
+  text-align: center;
+  padding: 0.5em;
+  color: brown;
+}
+.show-wrapper .show {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 0.5em;
+  padding: 1em;
+}
+.show-wrapper .show img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.footer {
+  background-color: black;
+}
+.footer .logo-sharepage-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1em;
+  flex-wrap: wrap;
+}
+.footer .logo-sharepage-wrapper .logo-text {
+  font-size: inherit;
+  font-weight: inherit;
+}
+.footer .fab {
+  padding: 1em;
+  color: var(--header-color);
+}
+.footer-copyright p {
+  text-align: center;
+  padding: 2em;
+}
+
+@media screen and (max-width: 600px) {
+  .header-menu ul {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .hamburger-menu-icon {
+    display: block;
+    z-index: 20;
+    cursor: pointer;
+  }
+  .header-menu ul.display-menu {
+    opacity: 1;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 10;
+    background-color: black;
+  }
+  .header-menu ul.display-menu li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .header-menu ul.display-menu li {
+    transition: color 1000ms ease-in-out;
+  }
+  .header-menu ul.display-menu li:hover {
+    color: whitesmoke;
+  }
+}
