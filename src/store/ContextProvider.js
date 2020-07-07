@@ -21,17 +21,12 @@ function ContextProvider(props) {
   );
   const [generalConfig, setGeneralConfig] = useState(null);
   const [currentShowName, setCurrentShowName] = useState("movie");
-  const [currentShowId, setCurrentShowId] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentGenre, setCurrentGenre] = useState(null);
-  const [data, setData] = useState(null);
   useEffect(() => {
     const url = [config, movie, tv];
     async function fetchConfig() {
       await Promise.all(
         url.map((value) => fetch(value).then((response) => response.json()))
       ).then((value) => {
-          console.log(value)
         setGeneralConfig({
           config: value[0],
           movies: value[1],
@@ -42,39 +37,6 @@ function ContextProvider(props) {
     fetchConfig();
   }, []);
 
-  useEffect(() => {
-    //setting genre incase it is general retrieval
-    const genre = currentGenre === null ? "" : "&with_genres=" + currentGenre;
-    let url;
-    //Getting appropriate url
-    if (currentShowName === "movie") {
-      url =
-        "https://api.themoviedb.org/3/discover/movie?api_key=" +
-        process.env.REACT_APP_API_KEY +
-        "&page=" +
-        currentPage +
-        genre;
-    } else if (currentShowName === "tv") {
-      url =
-        "https://api.themoviedb.org/3/discover/tv?api_key=" +
-        process.env.REACT_APP_API_KEY +
-        "&page=" +
-        currentPage +
-        genre;
-    } else if (currentShowName === "people") {
-      url =
-        "https://api.themoviedb.org/3/person/popular?api_key=" +
-        process.env.REACT_APP_API_KEY +
-        "&page=" +
-        currentPage;
-    }
-    const fetchData = async () => {
-      await fetch(url)
-        .then((response) => response.json())
-        .then((data) => setData(data));
-    };
-    fetchData();
-  }, [currentShowName, currentPage, currentGenre]);
   const menuClickHandler = (e) => {
     const { id } = e.target;
     switch (id) {
@@ -97,7 +59,7 @@ function ContextProvider(props) {
     <React.Fragment>
       {config && (
         <context.Provider
-          value={{ generalConfig, menuClickHandler, activeMenu, data }}
+          value={{ generalConfig, menuClickHandler, activeMenu}}
         >
           {props.children}
         </context.Provider>
