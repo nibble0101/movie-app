@@ -4,22 +4,7 @@ import { context } from "../../store/ContextProvider";
 const url = "https://image.tmdb.org/t/p/w300/";
 
 function People(props) {
-  //   const { generalConfig, data } = useContext(context);
-  const [people, setPeople] = React.useState(null);
-  const [pageNumber, setPageNumber] = React.useState(1);
-  React.useEffect(() => {
-    const url =
-      "https://api.themoviedb.org/3/person/popular?api_key=" +
-      process.env.REACT_APP_API_KEY +
-      "&page=" +
-      pageNumber;
-    const fetchData = async () => {
-      await fetch(url)
-        .then((response) => response.json())
-        .then((data) => setPeople(data));
-    };
-    fetchData();
-  }, [pageNumber]);
+ const {people} = useContext(context);
   return (
     <div className="show-wrapper">
       <h1> People </h1>
