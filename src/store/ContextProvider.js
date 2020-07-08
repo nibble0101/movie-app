@@ -42,6 +42,7 @@ function ContextProvider(props) {
   const [people, setPeople] = useState(null);
 
   const [generalConfig, setGeneralConfig] = useState(null);
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const url = [config, movie, tv];
     async function fetchConfig() {
@@ -59,8 +60,9 @@ function ContextProvider(props) {
   }, []);
 
   useEffect(() => {
+    
     const genre =
-      movieState.genre === null ? "" : "&with_genres=" + movieState.genre;
+      !movieState.genre ? "" : "&with_genres=" + movieState.genre;
     const url =
       "https://api.themoviedb.org/3/discover/movie?api_key=" +
       process.env.REACT_APP_API_KEY +
@@ -68,17 +70,21 @@ function ContextProvider(props) {
       movieState.page +
       genre;
     const fetchMovies = async () => {
+      
       await fetch(url)
         .then((response) => response.json())
         .then((data) => {
           setMovies(data);
+          setLoading(false)
         });
     };
     fetchMovies();
+   
   }, [movieState]);
 
   useEffect(() => {
-    const genre = tvState.genre === null ? "" : "&with_genres=" + tvState.genre;
+    
+    const genre = !tvState.genre ? "" : "&with_genres=" + tvState.genre;
     const url =
       "https://api.themoviedb.org/3/discover/tv?api_key=" +
       process.env.REACT_APP_API_KEY +
@@ -91,6 +97,7 @@ function ContextProvider(props) {
         .then((data) => setTvShows(data));
     };
     fetchTvShows();
+    
   }, [tvState]);
 
   useEffect(() => {
@@ -99,12 +106,13 @@ function ContextProvider(props) {
       process.env.REACT_APP_API_KEY +
       "&page=" +
       peopleState.page;
-      const fetchPeople = async () => {
-        await fetch(url)
-          .then((response) => response.json())
-          .then((data) => setPeople(data));
-      };
-      fetchPeople();
+    const fetchPeople = async () => {
+      await fetch(url)
+        .then((response) => response.json())
+        .then((data) => setPeople(data));
+    };
+    fetchPeople();
+    
   }, [peopleState]);
 
   const menuClickHandler = useCallback((e) => {
@@ -121,12 +129,35 @@ function ContextProvider(props) {
         return;
     }
   });
-
+  const genreClickHandler = useCallback((e) => {
+    const len = e.target.length;
+    let activeMenuId;
+    for (let i = 0; i < len; i++) {
+      if (e.target.value === e.target[i].value) {
+        activeMenuId = +e.target[i].id;
+        break;
+      }
+    }
+    if (activeMenu.movies) {
+      dispatchMovieState({type: "set-genre", genre: activeMenuId});
+    } else if (activeMenu.tv) {
+      dispatchTvState({type: "set-genre", genre: activeMenuId});
+    } 
+  });
   return (
     <React.Fragment>
       {config && (
         <context.Provider
-          value={{ generalConfig, menuClickHandler, activeMenu, movies, tvShows, people }}
+          value={{
+            loading,
+            generalConfig,
+            menuClickHandler,
+            genreClickHandler,
+            activeMenu,
+            movies,
+            tvShows,
+            people,
+          }}
         >
           {props.children}
         </context.Provider>

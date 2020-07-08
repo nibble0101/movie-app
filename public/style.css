@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
 *,
 *::before,
 *::after {
@@ -93,19 +93,65 @@ body {
   grid-template-rows: auto;
   gap: 0.5em;
   padding: 1em;
+  justify-items: center;
+  align-items: center;
+  
 }
 .show-wrapper .show img {
   display: block;
   width: 100%;
+  max-width: 300px;
   height: auto;
+  margin: auto;
 }
 
+.show-wrapper .image-wrapper{
+    box-shadow: 2px 3px 10px black;
+    position: relative;
+    
+}
+
+.show-wrapper .image-wrapper .title, .release-date, .designation{
+    padding:0 1em;
+    max-width: 300px;
+    color: whitesmoke;
+
+}
+
+.show-wrapper .rating{
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    z-index: 9;
+    background-color: #042224;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    opacity: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: yellow;
+}
 .pages {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+.pages .load-more{
+    padding: 1em;
+    margin: 1em 0;
+    color: whitesmoke;
+    background-color: #042224;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 3px 4px black;
+}
+.pages .load-more .dots{
+    font-size: 2em;
+}
+
 .footer {
   background-color: black;
 }

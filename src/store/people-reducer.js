@@ -11,7 +11,7 @@ const peopleReducer = (state, action) => {
 
 const initialPeopleState = {
     page: 1,
-    genre: null
+    genre: 0
 }
 
 

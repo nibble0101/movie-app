@@ -11,7 +11,7 @@ const tvReducer = (state, action) => {
 
 const initialTvState = {
     page: 1,
-    genre: null
+    genre: 0
 }
 
 

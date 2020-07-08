@@ -11,7 +11,7 @@ const movieReducer = (state, action) => {
 
 const initialMovieState = {
     page: 1,
-    genre: null
+    genre: 0
 }
 
 

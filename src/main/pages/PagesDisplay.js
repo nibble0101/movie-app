@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
+import { context } from "../../store/ContextProvider";
 
 function PagesDisplay(props) {
+  const { activeMenu } = useContext(context);
+  const active = activeMenu.movies
+    ? "Movies"
+    : activeMenu.tv
+    ? "TV Shows"
+    : "Personalities";
   return (
-    <div className = "pages">
-      <h2> Pages </h2>
+    <div className="pages">
       <p>
-        <button> 1 </button>
+        <button className="load-more">
+          {" "}
+          Load More <span className="active-menu-text">{active}</span> <span className = "dots"> ... </span>{" "}
+        </button>
       </p>
     </div>
   );
