@@ -144,6 +144,15 @@ function ContextProvider(props) {
       dispatchTvState({type: "set-genre", genre: activeMenuId});
     } 
   });
+  const loadMoreClickHandler = () => {
+      if(activeMenu.movies){
+        dispatchMovieState({type: "set-page", page: movieState.page + 1})
+      }else if(activeMenu.tv){
+        dispatchTvState({type: "set-page", page: tvState.page + 1})
+      }else if(activeMenu.people){
+        dispatchPeopleState({type: "set-page", page: peopleState.page + 1})
+      }
+  }
   return (
     <React.Fragment>
       {config && (
@@ -153,6 +162,7 @@ function ContextProvider(props) {
             generalConfig,
             menuClickHandler,
             genreClickHandler,
+            loadMoreClickHandler,
             activeMenu,
             movies,
             tvShows,
