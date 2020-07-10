@@ -10,9 +10,4 @@ const Wrapper = () => (
 );
 
 const root = document.getElementById("root");
-ReactDOM.render(
-  <React.StrictMode>
-    <Wrapper />
-  </React.StrictMode>,
-  root
-);
+ReactDOM.render(<Wrapper />, root);

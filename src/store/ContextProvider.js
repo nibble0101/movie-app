@@ -3,6 +3,7 @@ import { displayReducer, initialMenu } from "./display-store";
 import { initialMovieState, movieReducer } from "./movie-reducer";
 import { initialTvState, tvReducer } from "./tv-reducer";
 import { initialPeopleState, peopleReducer } from "./people-reducer";
+import { totalPageReducer, initialTotalPage} from "./total-page-reducer";
 
 /*
 -- urls for fetching API configuration details 
@@ -23,6 +24,7 @@ const tv =
 const context = React.createContext();
 
 function ContextProvider(props) {
+ 
   const [activeMenu, dispatchActiveMenu] = useReducer(
     displayReducer,
     initialMenu
@@ -42,6 +44,7 @@ function ContextProvider(props) {
   const [people, setPeople] = useState(null);
 
   const [generalConfig, setGeneralConfig] = useState(null);
+  const [totalPage, dispatchTotalPage] = useReducer(totalPageReducer, initialTotalPage)
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     const url = [config, movie, tv];
@@ -75,7 +78,8 @@ function ContextProvider(props) {
         .then((response) => response.json())
         .then((data) => {
           setMovies(data);
-          setLoading(false)
+          setLoading(false);
+          dispatchTotalPage({type: "set-movie", page: data.total_pages})
         });
     };
     fetchMovies();
@@ -94,7 +98,11 @@ function ContextProvider(props) {
     const fetchTvShows = async () => {
       await fetch(url)
         .then((response) => response.json())
-        .then((data) => setTvShows(data));
+        .then((data) => {
+            setTvShows(data)
+            dispatchTotalPage({type: "set-tv", page: data.total_pages})
+        });
+       
     };
     fetchTvShows();
     
@@ -109,7 +117,10 @@ function ContextProvider(props) {
     const fetchPeople = async () => {
       await fetch(url)
         .then((response) => response.json())
-        .then((data) => setPeople(data));
+        .then((data) => {
+            setPeople(data)
+            dispatchTotalPage({type: "set-people", page: data.total_pages})
+        });
     };
     fetchPeople();
     
@@ -120,12 +131,15 @@ function ContextProvider(props) {
     switch (id) {
       case "movies":
         dispatchActiveMenu("movies");
+        dispatchMovieState({type: "set-page", page: 1})
         return;
       case "tv":
         dispatchActiveMenu("tv");
+        dispatchTvState({type: "set-page", page: 1})
         return;
       case "people":
         dispatchActiveMenu("people");
+        dispatchPeopleState({type: "set-page", page: 1})
         return;
     }
   });
@@ -144,14 +158,42 @@ function ContextProvider(props) {
       dispatchTvState({type: "set-genre", genre: activeMenuId});
     } 
   });
-  const loadMoreClickHandler = () => {
+  const nextPageHandler = () => {
       if(activeMenu.movies){
+        if(totalPage.movie === movieState.page){
+            return;
+        }
         dispatchMovieState({type: "set-page", page: movieState.page + 1})
       }else if(activeMenu.tv){
+        if(totalPage.tv === tvState.page){
+            return;
+        }
         dispatchTvState({type: "set-page", page: tvState.page + 1})
       }else if(activeMenu.people){
+        if(totalPage.people === peopleState.page){
+            return;
+        }
         dispatchPeopleState({type: "set-page", page: peopleState.page + 1})
       }
+  }
+  const previousPageHandler = () => {
+    if(activeMenu.movies){
+        if(movieState.page === 1){
+            return;
+        }
+        dispatchMovieState({type: "set-page", page: movieState.page - 1})
+      }else if(activeMenu.tv){
+        if(tvState.page === 1){
+            return;
+        }
+        dispatchTvState({type: "set-page", page: tvState.page - 1})
+      }else if(activeMenu.people){
+        if(peopleState.page === 1){
+            return;
+        }
+        dispatchPeopleState({type: "set-page", page: peopleState.page - 1})
+      }
+
   }
   return (
     <React.Fragment>
@@ -162,11 +204,16 @@ function ContextProvider(props) {
             generalConfig,
             menuClickHandler,
             genreClickHandler,
-            loadMoreClickHandler,
+            nextPageHandler,
+            previousPageHandler,
             activeMenu,
             movies,
             tvShows,
             people,
+            totalPage,
+            movieState,
+            tvState,
+            peopleState
           }}
         >
           {props.children}

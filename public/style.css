@@ -137,21 +137,29 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1em 0;
 }
-.pages .load-more{
-    padding: 1em;
-    margin: 1em 0;
-    color: whitesmoke;
-    background-color: #042224;
-    outline: none;
+.pages p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pages button{
+    padding: 0.5em 1em;
     border: none;
-    cursor: pointer;
-    box-shadow: 2px 3px 4px black;
-}
-.pages .load-more .dots{
-    font-size: 2em;
+    outline: 3px solid #042224;
+    background-color:#000;
+    color: #212445;
+    box-shadow: 2px 3px 4px black;    
 }
 
+.pages .controls{
+    cursor: pointer;
+    transition: all linear 500ms;
+}
+.pages .controls:hover{
+    color: whitesmoke;
+}
 .footer {
   background-color: black;
 }

@@ -6,7 +6,6 @@ const url = "https://image.tmdb.org/t/p/w300/";
 
 function People(props) {
   const { people } = useContext(context);
-  console.log(people);
   return (
     <div className="show-wrapper">
       <h1> People </h1>
