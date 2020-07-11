@@ -12,7 +12,7 @@ function Movies(props) {
         {movies &&
           movies.results.map((v, i) => {
             return (
-              <Zoom key={Math.random()}>
+              <Zoom key={i + "movie"}>
                 <div className="image-wrapper">
                   <img src={v.backdrop_path ? baseMovieUrl + v.backdrop_path: altUrl} />
                   <p className = "title"> Title: {v.title}</p>

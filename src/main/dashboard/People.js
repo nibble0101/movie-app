@@ -3,7 +3,6 @@ import Zoom from "react-reveal/Zoom";
 import { context } from "../../store/ContextProvider";
 import { peopleReducer } from "../../store/people-reducer";
 const url = "https://image.tmdb.org/t/p/w300/";
-
 function People(props) {
   const { people } = useContext(context);
   return (
@@ -13,12 +12,12 @@ function People(props) {
         {people &&
           people.results.map((v, i) => {
             return (
-              <Zoom key={Math.random()}>
+              <Zoom key={i + "people"}>
                 <div className="image-wrapper">
-                  <img src={url + v.profile_path} key={Math.random()} />
+                  <img src={url + v.profile_path}  />
                   <p className="title">Name:  {v.name}</p>
                   <p className="rating">{v.popularity}</p>
-                  <p className="designation"> Know for:  {v.known_for_department}</p>
+                  <p className="designation"> Known for:  {v.known_for_department}</p>
                 </div>
               </Zoom>
             );

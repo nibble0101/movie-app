@@ -14,7 +14,7 @@ function TVShows(props) {
         {tvShows &&
           tvShows.results.map((v, i) => {
             return (
-              <Zoom key={Math.random()}>
+              <Zoom key={i + "tvshow"}>
                 <div className="image-wrapper">
                   <img
                     src={v.backdrop_path ? baseTvUrl + v.backdrop_path : altUrl}

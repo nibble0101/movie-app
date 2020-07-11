@@ -7,7 +7,7 @@ function Genre(props) {
   return (
     <React.Fragment>
       <div className="genres">
-        <label for = "genres"> Choose Genre: </label>
+        <label htmlFor = "genres"> Choose Genre: </label>
         <select id="genres"  name="genres" onChange={genreClickHandler}>
           <option id={0} key = {0}>
             All
