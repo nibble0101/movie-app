@@ -13,9 +13,9 @@ The data is obtained from [The Movie Database API](https://developers.themoviedb
 
 ## Dependencies
 
-This project was built using react, react-hambuger-menu  and react-reveal for the animations. For other dependencies, look at the package.json file.
+This project was built using [react](https://reactjs.org/), [react-hambuger-menu](https://www.npmjs.com/package/react-hamburger-menu), [react-router-dom](https://www.npmjs.com/package/react-router-dom)  and [react-reveal](https://www.npmjs.com/package/react-reveal) for the animations. For other dependencies, look at the package.json file.
 
-## Project Hosting
+## Live Project 
 
 The project is hosted live on [Netlify](https://www.netlify.com/). You can check it out [Here](https://filmmaze.netlify.app/).
 
