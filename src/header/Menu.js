@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { context } from "../store/ContextProvider";
 import HamburgerMenu from "react-hamburger-menu";
+import { Link } from "react-router-dom";
 
 function Menu(props) {
   const { menuClickHandler } = useContext(context);
@@ -8,15 +9,14 @@ function Menu(props) {
   const myRef = React.useRef();
   const hambugerClickHandler = React.useCallback(() => {
     setIsOpen(!isOpen);
-    myRef.current.classList.toggle("display-menu"); 
+    myRef.current.classList.toggle("display-menu");
     //myRef will be undefined if you nest it in Zoom
     //Use document.getElementById if you want to wrap movie component in Zoom component
-
   });
   const listClickHandler = React.useCallback((e) => {
     const { id } = e.target;
     if (id === "movies" || id === "tv" || id === "people") {
-      myRef.current.classList.toggle("display-menu")
+      myRef.current.classList.toggle("display-menu");
       setIsOpen(!isOpen);
     }
   });
@@ -29,9 +29,15 @@ function Menu(props) {
         }}
         ref={myRef}
       >
-        <li id="movies">Movies </li>
-        <li id="tv">TV Shows</li>
-        <li id="people">People</li>
+        <li id="movies">
+          <Link to = "/"> Movies </Link>
+        </li>
+        <li id="tv">
+          <Link to = "tvshows">TV Shows</Link>
+        </li>
+        <li id="people">
+          <Link to = "people">People</Link>
+        </li>
       </ul>
       <HamburgerMenu
         isOpen={isOpen}
