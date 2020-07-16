@@ -5,7 +5,7 @@ FilmMaze is a Single Page Application (SPA) built using HTML, CSS and [React.js]
 2. TV Shows and
 3. Personalities in the movie industry
 
-You can also search movies, TV shows and Personalities in the movie industry.
+You can also search movies, TV shows and Personalities.
 
 ## Data Source
 
@@ -17,7 +17,7 @@ This project was built using react, react-hambuger-menu  and react-reveal for th
 
 ## Project Hosting
 
-The project is hosted live [Here](https://filmmaze.netlify.app/) on [Netlify](https://www.netlify.com/).
+The project is hosted live on [Netlify](https://www.netlify.com/). You can check it out [Here](https://filmmaze.netlify.app/).
 
 ## License
 
