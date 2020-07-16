@@ -11,6 +11,10 @@ You can also search movies, TV shows and Personalities in the movie industry.
 
 The data is obtained from [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction).
 
+## Dependencies
+
+This project was built using react, react-hambuger-menu  and react-reveal for the animations. For other dependencies, look at the package.json file.
+
 ## Project Hosting
 
 The project is hosted live [Here](https://filmmaze.netlify.app/) on [Netlify](https://www.netlify.com/).
