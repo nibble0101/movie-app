@@ -14,11 +14,9 @@ function Menu(props) {
     //Use document.getElementById if you want to wrap movie component in Zoom component
   });
   const listClickHandler = React.useCallback((e) => {
-    const { id } = e.target;
-    if (id === "movies" || id === "tv" || id === "people") {
-      myRef.current.classList.toggle("display-menu");
-      setIsOpen(!isOpen);
-    }
+    myRef.current.classList.toggle("display-menu");
+    setIsOpen(!isOpen);
+
   });
   return (
     <div className="header-menu">
@@ -30,13 +28,13 @@ function Menu(props) {
         ref={myRef}
       >
         <li id="movies">
-          <Link to = "/"> Movies </Link>
+          <Link to = "/movies"> Movies </Link>
         </li>
         <li id="tv">
-          <Link to = "tvshows">TV Shows</Link>
+          <Link to = "/tvshows">TV Shows</Link>
         </li>
         <li id="people">
-          <Link to = "people">People</Link>
+          <Link to = "/people">People</Link>
         </li>
       </ul>
       <HamburgerMenu
