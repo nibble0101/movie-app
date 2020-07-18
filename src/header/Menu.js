@@ -1,28 +1,23 @@
-import React, { useContext } from "react";
-import { context } from "../store/ContextProvider";
+import React, {useCallback, useState} from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import { Link } from "react-router-dom";
 
 function Menu(props) {
-  const { menuClickHandler } = useContext(context);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const myRef = React.useRef();
-  const hambugerClickHandler = React.useCallback(() => {
+  const hambugerClickHandler = useCallback(() => {
     setIsOpen(!isOpen);
     myRef.current.classList.toggle("display-menu");
-    //myRef will be undefined if you nest it in Zoom
-    //Use document.getElementById if you want to wrap movie component in Zoom component
-  });
-  const listClickHandler = React.useCallback((e) => {
+  }, [isOpen]);
+  const listClickHandler = useCallback((e) => {
     myRef.current.classList.toggle("display-menu");
     setIsOpen(!isOpen);
 
-  });
+  }, [isOpen]);
   return (
     <div className="header-menu">
       <ul
         onClick={(e) => {
-          menuClickHandler(e);
           listClickHandler(e);
         }}
         ref={myRef}
