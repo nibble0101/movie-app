@@ -12,7 +12,7 @@ function TvDashboard(props) {
       <div className="show">
         {tvData.map((v, i) => {
           return (
-            <Zoom key={i + "movie"}>
+            <Zoom key={i + "tvshow"}>
               <div className="image-wrapper">
                 <Link to="movies/id">
                   <img

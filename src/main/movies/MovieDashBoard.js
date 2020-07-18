@@ -8,7 +8,6 @@ function MovieDashboard(props) {
   const { movieData } = props;
   return (
     <div className="show-wrapper">
-      <h1> Movies </h1>
       <div className="show">
         {movieData.map((v, i) => {
           return (

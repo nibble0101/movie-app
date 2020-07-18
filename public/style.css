@@ -19,8 +19,9 @@ body {
 .header {
   background-color: black;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  padding: 0.2em 3em;
 }
 .header-menu ul {
   display: flex;
@@ -28,14 +29,15 @@ body {
   align-items: center;
   list-style-type: none;
 }
-.header-menu ul li {
+.header-menu ul li a{
   padding: 1em;
   cursor: pointer;
   color: brown;
   font-weight: 700;
   transition: color 1000ms ease-in-out;
+  text-decoration: none;
 }
-.header-menu ul li:hover {
+.header-menu ul li a:hover {
   color: yellowgreen;
 }
 .hamburger-menu-icon {
@@ -44,16 +46,18 @@ body {
 .logo-text-2 {
   color: lightcoral;
 }
-.header-search input {
+.main-search{
+    text-align: center;
+}
+.main-search input {
   padding: 0.2em 1em;
   border: none;
-  outline: none;
   border-radius: 10px;
   background-color: brown;
   color: whitesmoke;
   font-weight: 700;
 }
-.header-search input:focus {
+.main-search input:focus {
   color: yellowgreen;
 }
 .genres {
@@ -78,16 +82,19 @@ body {
   color: yellowgreen;
   outline: none;
 }
+h1.show-title{
+    text-align: center;
+    padding: 0.5em;
+    color: brown;
+
+}
+
 .show-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.show-wrapper h1 {
-  text-align: center;
-  padding: 0.5em;
-  color: brown;
-}
+
 .show-wrapper .show {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
