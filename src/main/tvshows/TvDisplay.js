@@ -5,8 +5,12 @@ import TvGenre from "./TvGenre";
 import TvDashBoard from "./TvDashBoard";
 import TvPages from "./TvPages";
 
-const genreUrl = "https://api.themoviedb.org/3/genre/tv/list?api_key=" + process.env.REACT_APP_API_KEY
-const tvUrl = "https://api.themoviedb.org/3/discover/tv?api_key=" + process.env.REACT_APP_API_KEY;
+const genreUrl =
+  "https://api.themoviedb.org/3/genre/tv/list?api_key=" +
+  process.env.REACT_APP_API_KEY;
+const tvUrl =
+  "https://api.themoviedb.org/3/discover/tv?api_key=" +
+  process.env.REACT_APP_API_KEY;
 
 function TvDisplay() {
   const [tvData, setTvData] = useState([]);
@@ -50,7 +54,7 @@ function TvDisplay() {
     async function fetchData() {
       const tvShows = await fetch(url).then((response) => response.json());
       setTvData(tvShows.results);
-      console.log(tvShows)
+      console.log(tvShows);
       setTotalPages(tvShows.total_pages);
     }
     fetchData();
@@ -65,15 +69,20 @@ function TvDisplay() {
   return (
     <React.Fragment>
       <TvTitle />
-      <TvSearch />
-      <TvGenre tvGenreList = {tvGenreList} genreClickHandler = {genreClickHandler} />
-      <TvDashBoard tvData={tvData} />
-      <TvPages
-        tvPage={tvPage}
-        totalPages={totalPages}
-        previousPageHandler={previousPageHandler}
-        nextPageHandler={nextPageHandler}
+      <TvGenre
+        tvGenreList={tvGenreList}
+        genreClickHandler={genreClickHandler}
       />
+      <TvSearch />
+      <TvDashBoard tvData={tvData} />
+      {tvData.length && (
+        <TvPages
+          tvPage={tvPage}
+          totalPages={totalPages}
+          previousPageHandler={previousPageHandler}
+          nextPageHandler={nextPageHandler}
+        />
+      )}
     </React.Fragment>
   );
 }

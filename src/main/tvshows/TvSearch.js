@@ -3,7 +3,10 @@ import React from "react";
 export default function TvSearch() {
   return (
     <div className="main-search">
-      <input type="text" name="search" placeholder="Search Tv Shows..." />
+      <form>
+        <input type="text" name="search" placeholder="Search Tv Shows..." />
+        <input type = "submit" value = "Search" />
+      </form>
     </div>
   );
 }

@@ -68,18 +68,20 @@ export default function MovieDisplay() {
   return (
     <React.Fragment>
       <MovieTitle />
-      <MovieSearch />
       <MovieGenre
         movieGenreList={movieGenreList}
         genreClickHandler={genreClickHandler}
       />
+      <MovieSearch />
       <MovieDashBoard movieData={movieData} />
-      <MoviePages
-        moviePage={moviePage}
-        totalPages={totalPages}
-        nextPageHandler={nextPageHandler}
-        previousPageHandler={previousPageHandler}
-      />
+      {movieData.length && (
+        <MoviePages
+          moviePage={moviePage}
+          totalPages={totalPages}
+          nextPageHandler={nextPageHandler}
+          previousPageHandler={previousPageHandler}
+        />
+      )}
     </React.Fragment>
   );
 }
