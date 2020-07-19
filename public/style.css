@@ -15,7 +15,6 @@ body {
   background-color: #042224;
   color: #ffffff;
   font-family: "Open Sans Condensed", sans-serif;
-  
 }
 .header {
   background-color: black;
@@ -23,6 +22,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0.2em 3em;
+}
+.header .logo-text .logo-text-2{
+    color: brown;
 }
 .header .footer-social-media {
   color: whitesmoke;
@@ -50,14 +52,17 @@ body {
   transition: color 1000ms ease-in-out;
   text-decoration: none;
 }
+.header .header-menu .active-menu{
+    color: yellowgreen;
+}
 .header-menu ul li a:hover {
   color: yellowgreen;
 }
 .hamburger-menu-icon {
   display: none;
 }
-div.display{
-    min-height: 100vh;
+div.display {
+  min-height: 100vh;
 }
 .main-search {
   text-align: center;
@@ -93,7 +98,6 @@ div.display{
   border: none;
   margin-left: 0.5em;
   box-shadow: 2px 1px 2px black;
-
 }
 .genres select:focus {
   color: brown;
@@ -109,6 +113,7 @@ p.show-title {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-weight: 900;
 }
 
 .show-wrapper .show {
@@ -200,6 +205,7 @@ p.show-title {
 .footer .fab {
   padding: 1em;
   color: var(--header-color);
+  cursor: pointer;
 }
 .footer-copyright p {
   text-align: center;
@@ -208,13 +214,61 @@ p.show-title {
 
 /* Styling scroll bars  */
 
-body::-webkit-scrollbar{
-   width: 1em;
-   background-color: burlywood;
+body::-webkit-scrollbar {
+  width: 1em;
+  background-color: burlywood;
 }
-body::-webkit-scrollbar-thumb{
-    background-color: #212445;
-    border-radius: 10px;
+body::-webkit-scrollbar-thumb {
+  background-color: #212445;
+  border-radius: 10px;
+}
+
+/* Loading icon */
+.loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ripple div {
+    position: absolute;
+    border: 4px solid brown;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  @keyframes lds-ripple {
+    0% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 72px;
+      height: 72px;
+      opacity: 0;
+    }
+  }
+  
+
+@media screen and (max-width: 1000px) {
+  .header {
+    justify-content: space-between;
+    align-items: center;
+    padding: 0em 0.2em;
+  }
 }
 
 @media screen and (max-width: 800px) {

@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import HamburgerMenu from "react-hamburger-menu";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Menu(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,13 +23,13 @@ function Menu(props) {
         ref={myRef}
       >
         <li id="movies">
-          <Link to = "/movies"> Movies </Link>
+          <NavLink exact to = "/movies" activeClassName = "active-menu"> Movies </NavLink>
         </li>
         <li id="tv">
-          <Link to = "/tvshows">TV Shows</Link>
+          <NavLink exact to = "/tvshows" activeClassName = "active-menu">TV Shows</NavLink>
         </li>
         <li id="people">
-          <Link to = "/people">People</Link>
+          <NavLink exact to = "/people" activeClassName = "active-menu">People</NavLink>
         </li>
       </ul>
       <HamburgerMenu

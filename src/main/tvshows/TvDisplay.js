@@ -54,7 +54,6 @@ function TvDisplay() {
     async function fetchData() {
       const tvShows = await fetch(url).then((response) => response.json());
       setTvData(tvShows.results);
-      console.log(tvShows);
       setTotalPages(tvShows.total_pages);
     }
     fetchData();
@@ -75,14 +74,12 @@ function TvDisplay() {
       />
       <TvSearch />
       <TvDashBoard tvData={tvData} />
-      {tvData.length && (
-        <TvPages
+      <TvPages
           tvPage={tvPage}
           totalPages={totalPages}
           previousPageHandler={previousPageHandler}
           nextPageHandler={nextPageHandler}
         />
-      )}
     </React.Fragment>
   );
 }

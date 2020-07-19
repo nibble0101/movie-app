@@ -36,7 +36,6 @@ function PeopleDisplay() {
     async function fetchData() {
       const people = await fetch(url).then((response) => response.json());
       setPeopleData(people.results);
-      console.log(people);
       setTotalPages(people.total_pages);
     }
     fetchData();
@@ -47,14 +46,12 @@ function PeopleDisplay() {
       <PeopleTitle />
       <PeopleSearch />
       <PeopleDashBoard peopleData={peopleData} />
-      {peoplePage.length && (
-        <PeoplePages
-          peoplePage={peoplePage}
-          totalPages={totalPages}
-          nextPageHandler={nextPageHandler}
-          previousPageHandler={previousPageHandler}
-        />
-      )}
+      <PeoplePages
+        peoplePage={peoplePage}
+        totalPages={totalPages}
+        nextPageHandler={nextPageHandler}
+        previousPageHandler={previousPageHandler}
+      />
     </React.Fragment>
   );
 }

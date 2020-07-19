@@ -4,6 +4,7 @@ import MovieSearch from "./MovieSearch";
 import MovieGenre from "./MovieGenre";
 import MovieDashBoard from "./MovieDashBoard";
 import MoviePages from "./MoviePages";
+import Loader from "../Loader";
 
 const movieUrl =
   "https://api.themoviedb.org/3/discover/movie?api_key=" +
@@ -19,6 +20,7 @@ export default function MovieDisplay() {
   const [moviePage, setMoviePage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
   const [queryText, setQueryText] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
   const previousPageHandler = useCallback(
     (e) => {
       if (moviePage === 1) {
@@ -49,12 +51,14 @@ export default function MovieDisplay() {
     setMovieGenre(genreId);
   }, []);
   useEffect(() => {
+    setIsLoading(true)
     const genre = movieGenre === 0 ? "" : "&with_genres=" + movieGenre;
     const url = movieUrl + "&page=" + moviePage + genre;
     async function fetchData() {
       const movies = await fetch(url).then((response) => response.json());
       setMovieData(movies.results);
       setTotalPages(movies.total_pages);
+      setIsLoading(false)
     }
     fetchData();
   }, [moviePage, queryText, movieGenre]);
@@ -74,14 +78,13 @@ export default function MovieDisplay() {
       />
       <MovieSearch />
       <MovieDashBoard movieData={movieData} />
-      {movieData.length && (
-        <MoviePages
+      <MoviePages
           moviePage={moviePage}
           totalPages={totalPages}
           nextPageHandler={nextPageHandler}
           previousPageHandler={previousPageHandler}
         />
-      )}
+      {!movieData.length && isLoading && <Loader />}
     </React.Fragment>
   );
 }
