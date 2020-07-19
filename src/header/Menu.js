@@ -1,37 +1,36 @@
-import React, { useContext } from "react";
-import { context } from "../store/ContextProvider";
+import React, {useCallback, useState} from "react";
 import HamburgerMenu from "react-hamburger-menu";
+import { NavLink } from "react-router-dom";
 
 function Menu(props) {
-  const { menuClickHandler } = useContext(context);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const myRef = React.useRef();
-  const hambugerClickHandler = React.useCallback(() => {
+  const hambugerClickHandler = useCallback(() => {
     setIsOpen(!isOpen);
-    myRef.current.classList.toggle("display-menu"); 
-    //myRef will be undefined if you nest it in Zoom
-    //Use document.getElementById if you want to wrap movie component in Zoom component
+    myRef.current.classList.toggle("display-menu");
+  }, [isOpen]);
+  const listClickHandler = useCallback((e) => {
+    myRef.current.classList.toggle("display-menu");
+    setIsOpen(!isOpen);
 
-  });
-  const listClickHandler = React.useCallback((e) => {
-    const { id } = e.target;
-    if (id === "movies" || id === "tv" || id === "people") {
-      myRef.current.classList.toggle("display-menu")
-      setIsOpen(!isOpen);
-    }
-  });
+  }, [isOpen]);
   return (
     <div className="header-menu">
       <ul
         onClick={(e) => {
-          menuClickHandler(e);
           listClickHandler(e);
         }}
         ref={myRef}
       >
-        <li id="movies">Movies </li>
-        <li id="tv">TV Shows</li>
-        <li id="people">People</li>
+        <li id="movies">
+          <NavLink exact to = "/movies" activeClassName = "active-menu"> Movies </NavLink>
+        </li>
+        <li id="tv">
+          <NavLink exact to = "/tvshows" activeClassName = "active-menu">TV Shows</NavLink>
+        </li>
+        <li id="people">
+          <NavLink exact to = "/people" activeClassName = "active-menu">People</NavLink>
+        </li>
       </ul>
       <HamburgerMenu
         isOpen={isOpen}

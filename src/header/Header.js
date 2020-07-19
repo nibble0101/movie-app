@@ -1,17 +1,14 @@
-import React, {useContext} from "react";
-import Logo from './Logo';
-import Search from './Search';
-import Menu from './Menu';
-
-
-function Header(props) {
+import React from "react";
+import Logo from "./Logo";
+import Menu from "./Menu";
+import SharePage from "../footer/SharePage";
+function Header() {
   return (
-    <header className = 'header'>
+    <header className="header">
       <Logo />
-      <Search />
+      <SharePage />
       <Menu />
     </header>
   );
 }
-
 export default Header;

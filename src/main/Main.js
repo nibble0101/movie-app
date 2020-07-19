@@ -1,23 +1,19 @@
-import React, { useContext } from "react";
-import Genre from "./genre/Genre";
-import PagesDisplay from "./pages/PagesDisplay";
-import DashBoardDisplay from "./dashboard/DashBoardDisplay";
-import { context } from "../store/ContextProvider";
+import React from "react";
+import Movies from "./movies/MovieDisplay";
+import People from "./people/PeopleDisplay";
+import TvShows from "./tvshows/TvDisplay";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 function Main(props) {
-  const { generalConfig, activeMenu } = useContext(context);
-  const config =
-    generalConfig && activeMenu.movies
-      ? generalConfig.movies
-      : activeMenu.tv
-      ? generalConfig.tv
-      : null;
   return (
-    <main className="main-section">
-      {!activeMenu.people && config && <Genre config={config} />}
-      <DashBoardDisplay />
-      <PagesDisplay />
-    </main>
+    <div className="display">
+      <Switch>
+        <Route exact path="/" render={() => <Redirect to="/movies" />} />
+        <Route exact path="/movies" component={Movies} />
+        <Route exact path="/tvshows" component={TvShows} />
+        <Route exact path="/people" component={People} />
+      </Switch>
+    </div>
   );
 }
 
