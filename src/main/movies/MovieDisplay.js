@@ -58,6 +58,7 @@ export default function MovieDisplay() {
       const movies = await fetch(url).then((response) => response.json());
       setMovieData(movies.results);
       setTotalPages(movies.total_pages);
+      console.log(movies)
       setIsLoading(false)
     }
     fetchData();
