@@ -140,10 +140,13 @@ p.show-title {
 
 .show-wrapper .image-wrapper .title,
 .release-date,
-.designation {
+.designation, .link {
   padding: 0 1em;
   max-width: 300px;
   color: whitesmoke;
+}
+.show-wrapper .link a{
+    text-decoration: none;
 }
 
 .show-wrapper .rating {
@@ -161,6 +164,7 @@ p.show-title {
   align-items: center;
   color: yellow;
 }
+
 .pages {
   display: flex;
   justify-content: center;

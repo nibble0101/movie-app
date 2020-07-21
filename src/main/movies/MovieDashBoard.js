@@ -26,6 +26,8 @@ function MovieDashboard(props) {
                 <p className="title"> Title: {v.title}</p>
                 <p className="rating">{v.vote_average}/10</p>
                 <p className="release-date">Release Date: {v.release_date}</p>
+                <p className = "link"> More: <a href = "#"> 🔗 </a></p>
+
               </div>
             </Zoom>
           );
