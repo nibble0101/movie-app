@@ -18,7 +18,7 @@ export default function MovieDisplay(props) {
   const [movieData, setMovieData] = useState([]);
   const [movieGenreList, setMovieGenreList] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
-  const [totalPages, setTotalPages] = useState(null);
+  const [totalPages, setTotalPages] = useState(0);
   const [queryText, setQueryText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,7 +62,7 @@ export default function MovieDisplay(props) {
 
   const resetPage = useCallback((e) => {
     setMoviePage(1);
-  });
+  }, []);
 
   useEffect(() => {
     const movieGenre = +state.genreId;

@@ -12,7 +12,7 @@ export default function MoviePages(props) {
           <i className="fa fa-chevron-left"></i>
         </button>
         <button className="current-page">
-          {props.moviePage.toString().padStart(3, "0")} of {props.totalPages}
+          {props.moviePage.toString().padStart(props.totalPages.toString().length, "0")} of {props.totalPages}
         </button>
         <button className="controls" onClick={props.nextPageHandler}>
           <i className="fa fa-chevron-right"></i>

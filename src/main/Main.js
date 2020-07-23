@@ -13,7 +13,7 @@ function Main(props) {
         return <Redirect to={{pathname: "/movies/all", state: state}} />
         }} 
         />
-        <Route exact path="/tvshows" component={TvShows} />
+        <Route exact path="/tvshows/:genre" component={TvShows} />
         <Route exact path="/people" component={People} />
         <Route exact path="/movies/:genre" component={Movies} />
       </Switch>
