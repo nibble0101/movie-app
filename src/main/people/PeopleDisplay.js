@@ -10,8 +10,21 @@ const peopleUrl =
 function PeopleDisplay() {
   const [peopleData, setPeopleData] = useState([]);
   const [peoplePage, setPeoplePage] = useState(1);
-  const [totalPages, setTotalPages] = useState(null);
+  const [totalPages, setTotalPages] = useState(0);
   const [queryText, setQueryText] = useState("");
+
+  
+
+  const firstPageHandler = useCallback(
+    (e) => {
+      if (peoplePage === 1) {
+        return;
+      }
+      setPeoplePage(1);
+    },
+    [peoplePage]
+  );
+
   const previousPageHandler = useCallback(
     (e) => {
       if (peoplePage === 1) {
@@ -28,7 +41,17 @@ function PeopleDisplay() {
       }
       setPeoplePage((prevPage) => prevPage + 1);
     },
-    [peoplePage]
+    [peoplePage, totalPages]
+  );
+
+  const lastPageHandler = useCallback(
+    (e) => {
+      if (peoplePage === totalPages) {
+        return;
+      }
+      setPeoplePage(totalPages);
+    },
+    [peoplePage, totalPages]
   );
 
   useEffect(() => {
@@ -49,8 +72,10 @@ function PeopleDisplay() {
       <PeoplePages
         peoplePage={peoplePage}
         totalPages={totalPages}
+        firstPageHandler={firstPageHandler}
         nextPageHandler={nextPageHandler}
         previousPageHandler={previousPageHandler}
+        lastPageHandler={lastPageHandler}
       />
     </React.Fragment>
   );

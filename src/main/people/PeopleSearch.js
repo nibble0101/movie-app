@@ -7,7 +7,7 @@ export default function PeopleSearch() {
         <input
           type="text"
           name="search"
-          placeholder="Search Personalities..."
+          placeholder="search..."
         />
         <input type="submit" value="Search" />
       </form>
