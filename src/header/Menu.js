@@ -23,7 +23,7 @@ function Menu(props) {
         ref={myRef}
       >
         <li id="movies">
-          <NavLink exact to = "/movies" activeClassName = "active-menu"> Movies </NavLink>
+          <NavLink exact to = {{pathname: "/", state: {genreId: 0}}} activeClassName = "active-menu" > Movies </NavLink>
         </li>
         <li id="tv">
           <NavLink exact to = "/tvshows" activeClassName = "active-menu">TV Shows</NavLink>

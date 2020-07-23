@@ -1,23 +1,30 @@
 import React from "react";
 import Zoom from "react-reveal/Zoom";
+import { Link } from "react-router-dom";
 function MovieGenre(props) {
-  const { movieGenreList, genreClickHandler } = props;
+  const { movieGenreList, resetPage } = props;
   return (
     <Zoom>
       <section className="genres">
-        <label htmlFor="genres"> Genre: </label>
-        <select id="genres" name="genres" onChange={genreClickHandler}>
-          <option id={0} key={0} value={"All"}>
+        <button key="0genres" onClick={resetPage}>
+          <Link to={{ pathname: "/movies/all", state: { genreId: 0 } }}>
             All
-          </option>
-          {movieGenreList.map((v) => {
-            return (
-              <option id={v.id} key={v.id} value={v.name}>
+          </Link>
+        </button>
+        {movieGenreList.map((v) => {
+          return (
+            <button key={v.id + 1 + "genres"} onClick={resetPage}>
+              <Link
+                to={{
+                  pathname: `/movies/${v.name.replace(/\s+/g, "")}`,
+                  state: { genreId: v.id },
+                }}
+              >
                 {v.name}
-              </option>
-            );
-          })}
-        </select>
+              </Link>
+            </button>
+          );
+        })}
       </section>
     </Zoom>
   );

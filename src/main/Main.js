@@ -8,10 +8,14 @@ function Main(props) {
   return (
     <div className="display">
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/movies" />} />
-        <Route exact path="/movies" component={Movies} />
+        <Route exact path="/" render={({location}) => {
+        const state = !location.state ? {genreId: 0} : location.state;
+        return <Redirect to={{pathname: "/movies/all", state: state}} />
+        }} 
+        />
         <Route exact path="/tvshows" component={TvShows} />
         <Route exact path="/people" component={People} />
+        <Route exact path="/movies/:genre" component={Movies} />
       </Switch>
     </div>
   );

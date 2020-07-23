@@ -11,7 +11,7 @@ function MovieDashboard(props) {
       <div className="show">
         {movieData.map((v, i) => {
           return (
-            <Zoom key={i + "movie"}>
+            <Zoom key={i + 'movies'}>
               <div className="image-wrapper">
               <img
                     src={
