@@ -30,6 +30,7 @@ function TvDashboard(props) {
                 <p className="title"> Title: {v.original_name}</p>
                 <p className="rating">{v.vote_average}/10</p>
                 <p className="release-date">First Aired: {v.first_air_date}</p>
+                <p className = "link"> More: <a href = "#"> 🔗 </a></p>
               </div>
             </Zoom>
           );

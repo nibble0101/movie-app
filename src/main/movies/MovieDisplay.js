@@ -89,7 +89,7 @@ export default function MovieDisplay(props) {
       <MovieTitle />
       <MovieGenre movieGenreList={movieGenreList} resetPage = {resetPage} />
       <MovieSearch />
-      <MovieDashBoard movieData={movieData} />
+      <MovieDashBoard movieData={movieData} movieGenreList = {movieGenreList} id = {+state.genreId} />
       <MoviePages
         moviePage={moviePage}
         totalPages={totalPages}
