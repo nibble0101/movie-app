@@ -5,7 +5,7 @@ const urlExtension_1 = "?api_key=";
 const urlExtension_2 = "&language=en-US";
 
 function MovieDetails(props) {
-    const[details, setDetails] = useState({genres:[]});
+    const[details, setDetails] = useState({genres:[], spoken_languages:[]});
     const {params} = props.match
     useEffect(() => {
         const url = baseUrl + params.id + urlExtension_1 + process.env.REACT_APP_API_KEY + urlExtension_2;
