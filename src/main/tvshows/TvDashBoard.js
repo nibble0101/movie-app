@@ -6,7 +6,8 @@ const altUrl =
   "https://cdn.pixabay.com/photo/2017/02/23/21/35/cinema-2093264_960_720.jpg";
 
 function TvDashboard(props) {
-  const {tvData} = props;
+  const { tvData } = props;
+  const genre = "All"
   return (
     <div className="show-wrapper">
       <div className="show">
@@ -18,19 +19,24 @@ function TvDashboard(props) {
                   <img
                     src={
                       v.poster_path
-                      ? baseMovieUrl + v.poster_path
-                      : v.backdrop_path
-                      ? baseMovieUrl + v.backdrop_path
-                      : altUrl
+                        ? baseMovieUrl + v.poster_path
+                        : v.backdrop_path
+                        ? baseMovieUrl + v.backdrop_path
+                        : altUrl
                     }
-                    alt = {v.original_name}
+                    alt={v.original_name}
                   />
                 </Link>
 
                 <p className="title"> Title: {v.original_name}</p>
                 <p className="rating">{v.vote_average}/10</p>
                 <p className="release-date">First Aired: {v.first_air_date}</p>
-                <p className = "link"> More: <a href = "#"> 🔗 </a></p>
+                <p className="link">
+                  More:
+                  <Link to={`/tvshows/${genre.replace(/\s+/g, "")}/${v.id}`}>
+                    🔗
+                  </Link>
+                </p>
               </div>
             </Zoom>
           );
