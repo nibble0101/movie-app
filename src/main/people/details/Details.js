@@ -21,11 +21,11 @@ function Details(props) {
           <hr />
           <div>
             <h2> Birthday </h2>
-            <p>{props.details.birthday}</p>
+            <p>{props.details.birthday ? props.details.birthday: "Not Available" }</p>
           </div>
           <div>
             <h2> Place of birth </h2>
-            <p> {props.details.place_of_birth}</p>
+            <p> {props.details.place_of_birth ? props.details.place_of_birth : "Not Available"}</p>
           </div>
           {props.details.deathday && (
             <div>
@@ -35,7 +35,7 @@ function Details(props) {
           )}
            <div>
             <h2> Biography </h2>
-            <p> {props.details.biography}</p>
+            <p> {props.details.biography ? props.details.biography : "Not Available"}</p>
           </div>
           <div>
             <h2> Known for </h2>
