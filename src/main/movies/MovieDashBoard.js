@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Zoom from "react-reveal/Zoom";
 const baseMovieUrl = "https://image.tmdb.org/t/p/w300/";
 const altUrl =
@@ -7,30 +7,34 @@ const altUrl =
 
 function MovieDashboard(props) {
   const { movieData, movieGenreList, id } = props;
-  let genre =  movieGenreList.find(v => v.id === id)
+  let genre = movieGenreList.find((v) => v.id === id);
   genre = genre ? genre.name : "All";
   return (
     <div className="show-wrapper">
       <div className="show">
         {movieData.map((v, i) => {
           return (
-            <Zoom key={i + 'movies'}>
+            <Zoom key={i + "movies"}>
               <div className="image-wrapper">
-              <img
-                    src={
-                      v.poster_path
-                        ? baseMovieUrl + v.poster_path
-                        : v.backdrop_path
-                        ? baseMovieUrl + v.backdrop_path
-                        : altUrl
-                    }
-                    alt = {v.title}
-                  />
+                <img
+                  src={
+                    v.poster_path
+                      ? baseMovieUrl + v.poster_path
+                      : v.backdrop_path
+                      ? baseMovieUrl + v.backdrop_path
+                      : altUrl
+                  }
+                  alt={v.title}
+                />
                 <p className="title"> Title: {v.title}</p>
                 <p className="rating">{v.vote_average}/10</p>
                 <p className="release-date">Release Date: {v.release_date}</p>
-                <p className = "link"> More: <Link to = {`/movies/${genre.replace(/\s+/g, "")}/${v.id}`} > 🔗 </Link></p>
-
+                <p className="link">
+                  More:
+                  <Link to={`/movies/${genre.replace(/\s+/g, "")}/${v.id}`}>
+                    <i className="fa fa-link" aria-hidden="true"></i>
+                  </Link>
+                </p>
               </div>
             </Zoom>
           );

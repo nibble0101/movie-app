@@ -7,7 +7,7 @@ const altUrl =
 
 function TvDashboard(props) {
   const { tvData } = props;
-  const genre = "All"
+  const genre = "All";
   return (
     <div className="show-wrapper">
       <div className="show">
@@ -34,7 +34,7 @@ function TvDashboard(props) {
                 <p className="link">
                   More:
                   <Link to={`/tvshows/${genre.replace(/\s+/g, "")}/${v.id}`}>
-                    🔗
+                    <i className="fa fa-link" aria-hidden="true"></i>
                   </Link>
                 </p>
               </div>

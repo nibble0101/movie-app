@@ -6,6 +6,14 @@ const baseTvUrl = "https://image.tmdb.org/t/p/w300/";
 
 function Details(props) {
   console.log(props.details);
+  let {episode_run_time} = props.details, runTime;
+  if(episode_run_time.length > 1){
+      runTime = "Between " + episode_run_time[0] + " and " + episode_run_time[1] + " minutes";
+  }else if(episode_run_time.length === 1){
+       runTime = episode_run_time[0] + " minutes";
+  }else{
+       runTime = "Not available"
+  }
   return (
     <section
       className="details"
@@ -21,24 +29,31 @@ function Details(props) {
         <div className="details-text">
           <h1>{props.details.original_name} </h1>
           <p className="tag-line"> {props.details.type} </p>
-          <div>
-            <p>
-              <span className="episodes">
-                Episodes: {props.details.number_of_episodes}
-              </span>
-              <span className="seasons">
-                Seasons: {props.details.number_of_seasons}
-              </span>
-              <span className="episode-run-time">
-                Episode runtime: between {props.details.episode_run_time[0]} and{" "}
-                {props.details.episode_run_time[1]} minutes
-              </span>
-              <span className="sub-genres">{props.details.genres.map((subGenre, index) => {
-                  return <span key = {`${subGenre.id}${index}`}> {subGenre.name} </span>
-              })}</span>
+          <div className = "fine-details">
+            <p className="episodes">
+              Episodes: {props.details.number_of_episodes}
             </p>
-            <hr />
+            <p className="seasons">
+              Seasons: {props.details.number_of_seasons}
+            </p>
+            <p className="episode-run-time">
+              Episode runtime: {runTime}
+            </p>
+            <p className="sub-genres">
+               Genre: 
+              {props.details.genres.map((subGenre, index) => {
+                  if(index){
+                      return <span key={`${subGenre.id}${index}`}>, {subGenre.name} </span>
+
+                  }else{
+                    return <span key={`${subGenre.id}${index}`}> {subGenre.name} </span>
+
+                  }
+                
+              })}
+            </p>
           </div>
+          <hr />
           <div>
             <h2> Status </h2>
             <p>{props.details.status}</p>
@@ -53,22 +68,17 @@ function Details(props) {
           </div>
           <div>
             <h2> Last Aired </h2>
-            <p> {props.details.last_air_date ? props.details.last_air_date : "-" }</p>
-          </div>
-          <div>
-            <h2> Networks </h2>
             <p>
-              {props.details.networks.map((network, index) => {
-                return <span key={network.name + index}> <img style = {{width: "30px"}}  src =  {baseTvUrl + network.logo_path} /> {network.name} </span>
-              })}
+              {" "}
+              {props.details.last_air_date ? props.details.last_air_date : "-"}
             </p>
           </div>
+          <hr />
           <div className="home-link">
             <h2> Home Page </h2>
             <p>
-              <a href={props.details.homepage} >
-                {" "}
-                <i className="fa fa-link" aria-hidden="true"></i>{" "}
+              <a href={props.details.homepage}>
+                <i className="fa fa-link" aria-hidden="true"></i>
               </a>
             </p>
           </div>

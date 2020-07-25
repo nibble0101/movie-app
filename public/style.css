@@ -274,15 +274,16 @@ p.show-title {
   background-color: #050811;
   opacity: 0.8;
 }
-.fa-link{
-    color: #282828;
-    transition: color 1000ms linear;
+.fa-link {
+  color: green;
+  transition: color 1000ms linear;
 }
-.fa-link:hover{
-    color: brown;
+.fa-link:hover {
+  color: brown;
 }
-.details h2, .details h1{
-    color: #212445;
+.details h2,
+.details h1 {
+  color: yellowgreen;
 }
 .wrapper {
   width: 80%;
@@ -295,44 +296,59 @@ p.show-title {
   justify-content: space-around;
   align-items: center;
 }
-.wrapper .image-wrapper img{
-    border-radius: 10px;
-    margin-right: 2em ;
+.wrapper .image-wrapper img {
+  border-radius: 10px;
+  margin-right: 2em;
 }
-.details-text{
-    /* background-color: #282828; */
-    background-color: #050811;
-    padding: 1em;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px black;
+.details-text {
+  /* background-color: #282828; */
+  background-color: #050811;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px black;
 }
-.details p{ 
-    margin-bottom: 5px;
-    font-weight: 900;
-   
-  
+.details p {
+  margin-bottom: 5px;
+  font-weight: 900;
 }
-.tag-line{
-    color: burlywood;
+.details .fine-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.run-time, .details-date, .sub-genre{
-    padding-right: 1em;
+.details .fine-details p::before {
+  content: "";
+  display: inline-block;
+  margin-right: 0.5em;
+  width: 10px;
+  height: 10px;
+  background-color: burlywood;
+  border-radius: 50%;
 }
-.run-time::before, .details-date::before, .sub-genre::before{
-   content: "";
-   display: inline-block;
-   padding-right: 1em;
-   width: 10px;
-   height: 10px;
-   background-color: burlywood;
-   border-radius: 50%;
-   padding: 0;
+.tag-line {
+  color: burlywood;
 }
-.home-link a{
-    text-decoration: none;
-    color: whitesmoke;
+.run-time,
+.details-date,
+.sub-genre {
+  padding-right: 1em;
 }
- 
+
+.home-link a {
+  text-decoration: none;
+}
+.seasons-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.season {
+  background-color: #282828;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 10px;
+}
+
 /* Styling scroll bars  */
 
 body::-webkit-scrollbar {

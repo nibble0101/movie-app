@@ -17,7 +17,12 @@ function PeopleDashboard(props) {
               <p className="title">Name: {v.name}</p>
               <p className="rating">{v.popularity}</p>
               <p className="designation">Known for: {v.known_for_department}</p>
-              <p className = "link"> More: <a href = "#"> 🔗 </a></p>
+              <p className="link">
+                More:
+                <a href="#">
+                  <i className="fa fa-link" aria-hidden="true"></i>
+                </a>
+              </p>
             </div>
           );
         })}
