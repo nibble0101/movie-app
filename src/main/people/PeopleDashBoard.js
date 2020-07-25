@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 const baseMovieUrl = "https://image.tmdb.org/t/p/w300/";
 const altUrl =
   "https://cdn.pixabay.com/photo/2017/02/23/21/35/cinema-2093264_960_720.jpg";
@@ -19,9 +20,9 @@ function PeopleDashboard(props) {
               <p className="designation">Known for: {v.known_for_department}</p>
               <p className="link">
                 More:
-                <a href="#">
+                <Link to = {`/people/${v.id}`}>
                   <i className="fa fa-link" aria-hidden="true"></i>
-                </a>
+                </Link>
               </p>
             </div>
           );
