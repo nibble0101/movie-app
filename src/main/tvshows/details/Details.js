@@ -5,7 +5,6 @@ const imageBaseUrl = "https://image.tmdb.org/t/p/original/";
 const baseTvUrl = "https://image.tmdb.org/t/p/w300/";
 
 function Details(props) {
-  console.log(props.details);
   let {episode_run_time} = props.details, runTime;
   if(episode_run_time.length > 1){
       runTime = "Between " + episode_run_time[0] + " and " + episode_run_time[1] + " minutes";

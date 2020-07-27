@@ -12,10 +12,10 @@ export default function MovieSearch(props) {
     setValue(e.target.value);
   };
   const submitHandle = (e) => {
-    if(!value){
-        alert("Enter movie title before submitting!");
-        e.preventDefault();
-        return;
+    if (!value) {
+      alert("Enter movie title before submitting!");
+      e.preventDefault();
+      return;
     }
     e.preventDefault();
     setQuery(value);
@@ -26,10 +26,12 @@ export default function MovieSearch(props) {
       return;
     }
     const url =
-      queryUrl + process.env.REACT_APP_API_KEY + queryExtension + encodeURI(query);
+      queryUrl +
+      process.env.REACT_APP_API_KEY +
+      queryExtension +
+      encodeURI(query);
     async function fetchData() {
       const data = await fetch(url).then((response) => response.json());
-      console.log(data);
       setData(data.results);
     }
     fetchData();
