@@ -2,7 +2,6 @@ import React from "react";
 import MovieSearchResultDisplay from "./MovieSearchResultDisplay";
 
 function MovieSearchResults(props) {
-  console.log(props);
   return (
     <React.Fragment>
       <p style={{ textAlign: "center", padding: "1em" }}> Search Results </p>

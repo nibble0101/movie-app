@@ -4,7 +4,6 @@ import Image from "./Image";
 const imageBaseUrl = "https://image.tmdb.org/t/p/original/";
 
 function Details(props) {
-  console.log(props.details);
   return (
     <section
       className="details"

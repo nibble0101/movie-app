@@ -11,7 +11,6 @@ function TvShowDetails(props) {
         const url = baseUrl + params.id + urlExtension_1 + process.env.REACT_APP_API_KEY + urlExtension_2;
          async function fetchDetails(){
               const details = await fetch(url).then(response => response.json());
-              console.log(details)
               setDetails(details);
          }
          fetchDetails()
