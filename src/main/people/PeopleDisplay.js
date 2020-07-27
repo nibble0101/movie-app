@@ -11,8 +11,6 @@ function PeopleDisplay() {
   const [peopleData, setPeopleData] = useState([]);
   const [peoplePage, setPeoplePage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [queryText, setQueryText] = useState("");
 
   const firstPageHandler = useCallback(
     (e) => {
@@ -56,14 +54,12 @@ function PeopleDisplay() {
   useEffect(() => {
     const url = peopleUrl + "&page=" + peoplePage;
     async function fetchData() {
-      setIsLoading(true)
       const people = await fetch(url).then((response) => response.json());
       setPeopleData(people.results);
       setTotalPages(people.total_pages);
-      setIsLoading(false)
     }
     fetchData();
-  }, [peoplePage, queryText]);
+  }, [peoplePage]);
 
   return (
     <React.Fragment>

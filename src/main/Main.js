@@ -5,6 +5,8 @@ import TvShows from "./tvshows/TvDisplay";
 import MovieDetails from "./movies/details/MovieDetails";
 import TvShowDetails from "./tvshows/details/TvShowDetails";
 import PeopleDetails from "./people/details/PeopleDetails";
+import MovieSearchResults from "./movies/search/MovieSearchResults";
+import PeopleSearchResults from "./people/search/PeopleSearchResults";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 function Main(props) {
@@ -22,6 +24,8 @@ function Main(props) {
         <Route exact path="/people/:id" component={PeopleDetails} />
         <Route exact path="/movies/:genre" component={Movies} />
         <Route exact path = "/movies/:genre/:id" component = {MovieDetails} />
+        <Route exact path = "/movies/search/all/:name" component = {MovieSearchResults} />
+        <Route exact path = "/people/search/:name" component = {PeopleSearchResults} />
       </Switch>
     </div>
   );
