@@ -5,7 +5,7 @@ function CopyRight(props) {
   return (
     <div className="footer-copyright">
       <p>
-        Copyright {"\u00A9"} Joe Nibble{" "}
+        Copyright {"\u00A9"} Joseph Mawa{" "}
         {`${year > 2020 ? "2020 - " + year : year}`}
       </p>
     </div>
