@@ -26,11 +26,16 @@ function MovieDashboard(props) {
                   }
                   alt={v.title}
                 />
-                <p className="title"> Title: {v.title}</p>
+                <p className="title">
+                  <span className="label"> Title: </span> {v.title}
+                </p>
                 <p className="rating">{v.vote_average}/10</p>
-                <p className="release-date">Release Date: {v.release_date}</p>
+                <p className="release-date">
+                  <span className="label"> Release Date: </span>
+                  {v.release_date}
+                </p>
                 <p className="link">
-                  More:
+                  <span className="label"> More: </span>
                   <Link to={`/movies/${genre.replace(/\s+/g, "")}/${v.id}`}>
                     <i className="fa fa-link" aria-hidden="true"></i>
                   </Link>

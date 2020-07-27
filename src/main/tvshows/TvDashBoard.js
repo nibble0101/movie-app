@@ -25,11 +25,11 @@ function TvDashboard(props) {
                   }
                   alt={v.original_name}
                 />
-                <p className="title"> Title: {v.original_name}</p>
+                <p className="title"> <span className = "label"> Title:</span> {v.original_name}</p>
                 <p className="rating">{v.vote_average}/10</p>
-                <p className="release-date">First Aired: {v.first_air_date}</p>
+                <p className="release-date"> <span className = "label"> First Aired: </span> {v.first_air_date}</p>
                 <p className="link">
-                  More:
+                <span className = "label">  More: </span>
                   <Link to={`/tvshows/${genre.replace(/\s+/g, "")}/${v.id}`}>
                     <i className="fa fa-link" aria-hidden="true"></i>
                   </Link>

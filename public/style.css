@@ -146,7 +146,9 @@ p.show-title {
   padding: 1em 0em 0em 0em;
   font-weight: 1000;
 }
-
+.show .label, .details-text .label{
+    color: #18bbf7;
+}
 .show-wrapper {
   display: flex;
   flex-direction: column;

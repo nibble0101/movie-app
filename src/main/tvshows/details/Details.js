@@ -31,16 +31,18 @@ function Details(props) {
           <p className="tag-line"> {props.details.type} </p>
           <div className = "fine-details">
             <p className="episodes">
-              Episodes: {props.details.number_of_episodes}
+              <span className = "label"> Episodes: </span>  {props.details.number_of_episodes}
             </p>
             <p className="seasons">
-              Seasons: {props.details.number_of_seasons}
+            <span className = "label"> Seasons: </span> {props.details.number_of_seasons}
             </p>
             <p className="episode-run-time">
-              Episode runtime: {runTime}
+            <span className = "label"> Episode runtime: </span> 
+               {runTime}
             </p>
             <p className="sub-genres">
-               Genre: 
+            <span className = "label"> Genre: </span>
+               
               {props.details.genres.map((subGenre, index) => {
                   if(index){
                       return <span key={`${subGenre.id}${index}`}>, {subGenre.name} </span>
