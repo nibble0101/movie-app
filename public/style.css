@@ -23,6 +23,9 @@ body {
   align-items: center;
   padding: 0.2em 3em;
 }
+.link{
+  text-decoration: none;
+}
 .header .logo-text .logo-text-2 {
   color: brown;
 }
