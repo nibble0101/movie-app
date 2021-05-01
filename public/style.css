@@ -207,36 +207,6 @@ p.show-title {
 .pages .controls:hover {
   color: whitesmoke;
 }
-.footer {
-  background-color: black;
-}
-.footer a{
-    text-decoration: none;
-}
-.footer .logo-sharepage-wrapper {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 1em;
-  flex-wrap: wrap;
-}
-.footer .logo-sharepage-wrapper .logo-text {
-  font-size: inherit;
-  font-weight: inherit;
-}
-.footer .fab {
-  padding: 1em;
-  color: var(--header-color);
-  cursor: pointer;
-  transition: color 1000ms linear;
-}
-.footer  .fab:hover{
-    color: whitesmoke;
-}
-.footer-copyright p {
-  text-align: center;
-  padding: 2em;
-}
 
 
 /* Styling movie details */

@@ -3,7 +3,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.2em 3em;
+  padding: 1em 3em;
+
 }
 
 .header__menu {
@@ -23,6 +24,10 @@
   color: yellow;
 }
 
+.header--logo-text{
+    font-size: 2em;
+    font-weight: bolder;
+}
 .header__logo-text-2 {
   color: brown;
 }

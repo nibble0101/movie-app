@@ -1,0 +1,26 @@
+.footer {
+  background-color: black;
+}
+.footer__top-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1em;
+  flex-wrap: wrap;
+}
+.footer__bottom-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+.footer .fab {
+  padding: 1em;
+  color: var(--header-color);
+  cursor: pointer;
+  transition: color 1000ms linear;
+}
+.footer .fab:hover {
+  color: whitesmoke;
+}
