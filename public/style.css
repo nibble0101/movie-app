@@ -29,6 +29,9 @@ body {
 .header .logo-text .logo-text-2 {
   color: brown;
 }
+.current-page{
+  padding: 0 1em;
+}
 .header .footer-social-media {
   color: whitesmoke;
 }
@@ -105,6 +108,7 @@ div.display {
   background-color: black;
   box-shadow: 2px 3px 4px black;
 }
+
 .movie-main-title {
   height: 28px;
 }
@@ -228,7 +232,10 @@ p.show-title {
   color: #212445;
   box-shadow: 2px 3px 4px black;
 }
-
+.pages button:focus{
+  background-color: khaki;
+  color: black;
+}
 .pages .controls {
   cursor: pointer;
   transition: all linear 500ms;

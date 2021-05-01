@@ -1,104 +1,110 @@
-import React, { useState, useEffect, useCallback } from "react";
-import MovieTitle from "./MovieTitle";
-import MovieSearch from "./MovieSearch";
-import MovieGenre from "./MovieGenre";
+import React, { useState, useEffect } from "react";
 import MovieDashBoard from "./MovieDashBoard";
+import { Genre } from "./Genre";
 import MoviePages from "./MoviePages";
 import Loader from "../Loader";
 
-const movieUrl =
-  "https://api.themoviedb.org/3/discover/movie?api_key=" +
-  process.env.REACT_APP_API_KEY;
-const genreUrl =
-  "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-  process.env.REACT_APP_API_KEY;
+const baseUrl = "https://api.themoviedb.org/3";
 
-export default function MovieDisplay(props) {
-  const { state } = props.location;
+const movieUrl = `${baseUrl}/discover/movie?api_key=${process.env.REACT_APP_API_KEY}`;
+const genreUrl = `${baseUrl}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`;
+
+export default function MovieDisplay() {
   const [movieData, setMovieData] = useState([]);
   const [movieGenreList, setMovieGenreList] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [queryText, setQueryText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [genreId, setGenreId] = useState(28);
 
-  const lastPageHandler = useCallback(
-    (e) => {
-      if (moviePage === totalPages) {
-        return;
-      }
-      setMoviePage(totalPages);
-    },
-    [moviePage, totalPages]
-  );
-  
-  const nextPageHandler = useCallback(
-    (e) => {
-      if (moviePage === totalPages) {
-        return;
-      }
-      setMoviePage((prevPage) => prevPage + 1);
-    },
-    [moviePage, totalPages]
-  );
-  const firstPageHandler = useCallback(
-    (e) => {
-      if (moviePage === 1) {
-        return;
-      }
-      setMoviePage(1);
-    },
-    [moviePage]
-  );
-  const previousPageHandler = useCallback(
-    (e) => {
-      if (moviePage === 1) {
-        return;
-      }
-      setMoviePage((prevPage) => prevPage - 1);
-    },
-    [moviePage]
-  );
-
-  const resetPage = useCallback((e) => {
+  const lastPageHandler = () => {
+    if (moviePage === totalPages) {
+      return;
+    }
+    setMoviePage(totalPages);
+  };
+  const selectGenreHandler = (event) => {
+    const { value } = event.target;
+    const genreObject = movieGenreList.find(
+      (genreObj) => genreObj.name === value
+    );
+    setGenreId(genreObject.id);
+  };
+  const nextPageHandler = () => {
+    if (moviePage === totalPages) {
+      return;
+    }
+    setMoviePage((prevPage) => prevPage + 1);
+  };
+  const firstPageHandler = () => {
+    if (moviePage === 1) {
+      return;
+    }
     setMoviePage(1);
-  }, []);
+  };
+  const previousPageHandler = () => {
+    if (moviePage === 1) {
+      return;
+    }
+    setMoviePage((prevPage) => prevPage - 1);
+  };
 
   useEffect(() => {
-    const movieGenre = +state.genreId;
-    const genre = movieGenre === 0 ? "" : "&with_genres=" + movieGenre;
-    const url = movieUrl + "&page=" + moviePage + genre;
+    const url = `${movieUrl}&page=${moviePage}&with_genres=${genreId} `;
     async function fetchMovies() {
-      const movies = await fetch(url).then((response) => response.json());
-      setMovieData(movies.results);
-      setTotalPages(movies.total_pages);
+      try {
+        setIsLoading(true);
+        const movies = await fetch(url).then((response) => response.json());
+        setMovieData(movies.results);
+        setTotalPages(movies.total_pages);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchMovies();
-  }, [moviePage, queryText, state.genreId]);
+  }, [moviePage, genreId]);
 
   useEffect(() => {
     async function fetchGenre() {
-      const genre = await fetch(genreUrl).then((response) => response.json());
-      setMovieGenreList(genre.genres);
+      try {
+        const genre = await fetch(genreUrl).then((response) => response.json());
+        setMovieGenreList(genre.genres);
+        console.log(genre.genres);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchGenre();
   }, []);
+  if (!movieGenreList.length || !movieData.length) {
+    return <Loader />;
+  }
 
   return (
-    <React.Fragment>
-      <MovieTitle />
-      <MovieGenre movieGenreList={movieGenreList} resetPage = {resetPage} />
-      <MovieSearch />
-      <MovieDashBoard movieData={movieData} movieGenreList = {movieGenreList} id = {+state.genreId} />
+    <>
+      <Genre
+        genreList={movieGenreList}
+        genreId={genreId}
+        selectGenreHandler={selectGenreHandler}
+      />
+      <MovieDashBoard
+        movieData={movieData}
+        movieGenreList={movieGenreList}
+        id={genreId}
+        isLoading={isLoading}
+      />
       <MoviePages
         moviePage={moviePage}
         totalPages={totalPages}
-        firstPageHandler = {firstPageHandler}
+        firstPageHandler={firstPageHandler}
         nextPageHandler={nextPageHandler}
         previousPageHandler={previousPageHandler}
-        lastPageHandler = {lastPageHandler}
+        lastPageHandler={lastPageHandler}
       />
-      {!movieData.length && isLoading && <Loader />}
-    </React.Fragment>
+    </>
   );
 }
