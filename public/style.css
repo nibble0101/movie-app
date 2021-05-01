@@ -165,7 +165,7 @@ p.show-title {
 
 .show-wrapper .show {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   gap: 0.5em;
   padding: 1em;
@@ -183,6 +183,7 @@ p.show-title {
 .show-wrapper .image-wrapper {
   box-shadow: 2px 3px 10px black;
   position: relative;
+  max-width: 200px;
 }
 
 .show-wrapper .image-wrapper .title,
