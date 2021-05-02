@@ -47,7 +47,7 @@ export default function Movies() {
 
   return (
     <form className="genre" onSubmit={submitGenre}>
-      <label htmlFor="genre">Select Genre: </label>
+      <label htmlFor="genre">Select Genre</label>
       <select id="genre" onChange={selectGenre} value={selectedGenre}>
         {genreList.map((genreObject) => {
           return <option key={genreObject.id}> {genreObject.name} </option>;

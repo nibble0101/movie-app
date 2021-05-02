@@ -6,14 +6,5 @@
 
 .search__text-input, .search__submit-input{
     padding: 0.2em 1em;
-    border: 1px solid transparent;
-    outline: none;
     margin-right: 5px;
-}
-.search__text-input:focus{
-    outline: 2px solid grey;
-}
-
-.search__submit-input{
-    border-radius: 0px;
 }

@@ -14,6 +14,7 @@ function PeopleDashboard(props) {
             <div className="image-wrapper" key={i + "people"}>
               <img
                 src={v.profile_path ? baseMovieUrl + v.profile_path : altUrl}
+                alt={v.name}
               />
               <p className="title">
                 <span className="label"> Name:</span> {v.name}
