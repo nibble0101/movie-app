@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import { NavLink } from "react-router-dom";
 
@@ -6,46 +6,44 @@ function Menu(props) {
   const [isOpen, setIsOpen] = useState(false);
   const myRef = React.useRef();
 
-  const hambugerClickHandler = useCallback(() => {
+  const hambugerClickHandler = () => {
     setIsOpen(!isOpen);
-    myRef.current.classList.toggle("display-menu");
-  }, [isOpen]);
+    myRef.current.classList.toggle("header__display-menu");
+  };
 
-  const listClickHandler = useCallback(
-    (e) => {
-      myRef.current.classList.toggle("display-menu");
-      setIsOpen(!isOpen);
-    },
-    [isOpen]
-  );
+  const listClickHandler = () => {
+    myRef.current.classList.toggle("header__display-menu");
+    setIsOpen(!isOpen);
+  };
   return (
-    <div className="header-menu">
+    <div>
       <ul
         onClick={(e) => {
           listClickHandler(e);
         }}
         ref={myRef}
+        className="header__menu"
       >
-        <li id="movies">
+        <li id="movies" className="header__menu-item">
           <NavLink
             exact
             to={{ pathname: "/", state: { genreId: 0 } }}
-            activeClassName="active-menu"
+            className="link link--menu-link"
           >
             Movies
           </NavLink>
         </li>
-        <li id="tv">
+        <li id="tv" className="header__menu-item">
           <NavLink
             exact
             to={{ pathname: "/tvshows/all", state: { genreId: 0 } }}
-            activeClassName="active-menu"
+            className="link link--menu-link"
           >
             TV Shows
           </NavLink>
         </li>
-        <li id="people">
-          <NavLink exact to="/people" activeClassName="active-menu">
+        <li id="people" className="header__menu-item">
+          <NavLink exact to="/people" className="link link--menu-link">
             People
           </NavLink>
         </li>
@@ -57,7 +55,7 @@ function Menu(props) {
         height={10}
         strokeWidth={2}
         color={"brown"}
-        className={"hamburger-menu-icon"}
+        className="header__hamburger-menu-icon"
       />
     </div>
   );

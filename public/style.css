@@ -16,21 +16,9 @@ body {
   color: #ffffff;
   font-family: "Open Sans Condensed", sans-serif;
 }
-.header {
-  background-color: black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.2em 3em;
-}
+
 .link{
   text-decoration: none;
-}
-.header .logo-text .logo-text-2 {
-  color: brown;
-}
-.current-page{
-  padding: 0 1em;
 }
 .header .footer-social-media {
   color: whitesmoke;
@@ -44,29 +32,8 @@ body {
 .header .footer-social-media .fab:hover {
   color: #ffffff;
 }
-.header-menu ul {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style-type: none;
-}
-.header-menu ul li a {
-  padding: 1em;
-  cursor: pointer;
-  color: brown;
-  font-weight: 700;
-  transition: color 1000ms ease-in-out;
-  text-decoration: none;
-}
-.header .header-menu .active-menu {
-  color: yellowgreen;
-}
-.header-menu ul li a:hover {
-  color: yellowgreen;
-}
-.hamburger-menu-icon {
-  display: none;
-}
+
+
 div.display {
   min-height: 100vh;
 }
@@ -244,36 +211,6 @@ p.show-title {
 .pages .controls:hover {
   color: whitesmoke;
 }
-.footer {
-  background-color: black;
-}
-.footer a{
-    text-decoration: none;
-}
-.footer .logo-sharepage-wrapper {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 1em;
-  flex-wrap: wrap;
-}
-.footer .logo-sharepage-wrapper .logo-text {
-  font-size: inherit;
-  font-weight: inherit;
-}
-.footer .fab {
-  padding: 1em;
-  color: var(--header-color);
-  cursor: pointer;
-  transition: color 1000ms linear;
-}
-.footer  .fab:hover{
-    color: whitesmoke;
-}
-.footer-copyright p {
-  text-align: center;
-  padding: 2em;
-}
 
 
 /* Styling movie details */
@@ -438,47 +375,6 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-@media screen and (max-width: 600px) {
-  .header-menu ul {
-    display: none;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .hamburger-menu-icon {
-    display: block;
-    z-index: 20;
-    cursor: pointer;
-  }
-  .header-menu ul.display-menu {
-    opacity: 1;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 18;
-    background-color: black;
-  }
-  .header-menu ul.display-menu li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .header-menu ul.display-menu li {
-    transition: color 1000ms ease-in-out;
-  }
-  .header-menu ul.display-menu li:hover {
-    color: whitesmoke;
-  }
-  .wrapper{
-      flex-direction: column;
-  }
-  .wrapper .image-wrapper img {
-    margin-right: 0;
-  }
-}
 
 @media screen and (max-width: 450px) {
   .show-wrapper .show {

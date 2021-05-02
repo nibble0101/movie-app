@@ -2,7 +2,7 @@ import React from "react";
 
 function SharePage(props) {
   return (
-    <div className="footer-social-media">
+    <p>
       Share:
       <a href="https://facebook.com/">
         <i className="fab fa-facebook"></i>
@@ -13,7 +13,7 @@ function SharePage(props) {
       <a href="https://www.whatsapp.com/">
         <i className="fab fa-whatsapp"></i>
       </a>
-    </div>
+    </p>
   );
 }
 
