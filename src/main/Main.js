@@ -1,5 +1,5 @@
 import React from "react";
-import Movies from "./movies/MovieDisplay";
+import Movies from "./movies/Movies";
 import People from "./people/PeopleDisplay";
 import TvShows from "./tvshows/TvDisplay";
 import MovieDetails from "./movies/details/MovieDetails";
@@ -9,12 +9,14 @@ import MovieSearchResults from "./movies/search/MovieSearchResults";
 import TvSearchResults from "./tvshows/search/TvSearchResults";
 import PeopleSearchResults from "./people/search/PeopleSearchResults";
 import { Switch, Route } from "react-router-dom";
+import MovieDisplay from "./movies/MovieDisplay";
 
 function Main(props) {
   return (
     <div className="display">
       <Switch>
         <Route exact path="/" component={Movies} />
+        <Route exact path="/movies/genre" component={MovieDisplay} />
         <Route exact path="/tvshows/:genre" component={TvShows} />
         <Route exact path="/tvshows/:genre/:id" component={TvShowDetails} />
         <Route exact path="/people" component={People} />

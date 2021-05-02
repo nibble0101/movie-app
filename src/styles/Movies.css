@@ -1,0 +1,9 @@
+.genre {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.genre__item {
+  margin: 1em;
+}

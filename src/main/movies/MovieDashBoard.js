@@ -7,9 +7,8 @@ const altUrl =
   "https://cdn.pixabay.com/photo/2017/02/23/21/35/cinema-2093264_960_720.jpg";
 
 function MovieDashboard(props) {
-  const { movieData, movieGenreList, id, isLoading } = props;
-  let genre = movieGenreList.find((v) => v.id === id);
-  genre = genre ? genre.name : "All";
+  const { movieData, id, name, isLoading } = props;
+
   if (isLoading) {
     return <Loader />;
   }
@@ -42,7 +41,7 @@ function MovieDashboard(props) {
                 </p>
                 <p className="link">
                   <span className="label"> More: </span>
-                  <Link to={`/movies/${genre.replace(/\s+/g, "")}/${v.id}`}>
+                  <Link to={`/movies/${encodeURIComponent(name)}/${id}`}>
                     <i className="fa fa-link" aria-hidden="true"></i>
                   </Link>
                 </p>

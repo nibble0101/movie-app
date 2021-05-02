@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import MovieDashBoard from "./MovieDashBoard";
-import { Genre } from "./Genre";
 import MoviePages from "./MoviePages";
 import Loader from "../Loader";
+import MovieSearch from "./MovieSearch";
+import SearchResult from "./SearchResult";
+import { useLocation } from "react-router-dom";
 
 const baseUrl = "https://api.themoviedb.org/3";
 
 const movieUrl = `${baseUrl}/discover/movie?api_key=${process.env.REACT_APP_API_KEY}`;
-const genreUrl = `${baseUrl}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`;
+const queryUrl = `${baseUrl}/search/movie?api_key=${process.env.REACT_APP_API_KEY}`;
 
 export default function MovieDisplay() {
   const [movieData, setMovieData] = useState([]);
-  const [movieGenreList, setMovieGenreList] = useState([]);
+  const [queriedMovieData, setQueriedMovieData] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [genreId, setGenreId] = useState(28);
+  const [query, setQuery] = useState("");
+  const [value, setValue] = useState("");
+  const {
+    state: { id, name },
+  } = useLocation();
 
   const lastPageHandler = () => {
     if (moviePage === totalPages) {
@@ -23,13 +29,7 @@ export default function MovieDisplay() {
     }
     setMoviePage(totalPages);
   };
-  const selectGenreHandler = (event) => {
-    const { value } = event.target;
-    const genreObject = movieGenreList.find(
-      (genreObj) => genreObj.name === value
-    );
-    setGenreId(genreObject.id);
-  };
+
   const nextPageHandler = () => {
     if (moviePage === totalPages) {
       return;
@@ -49,8 +49,24 @@ export default function MovieDisplay() {
     setMoviePage((prevPage) => prevPage - 1);
   };
 
+  const changeHandle = (event) => {
+    setValue(event.target.value);
+    if(query || queriedMovieData.length ){
+      setQuery("");
+      setQueriedMovieData([]);
+    }
+  };
+  const submitHandle = (event) => {
+    event.preventDefault();
+    if (!value) {
+      alert("Enter movie title");
+      return;
+    }
+    setQuery(value);
+  };
+
   useEffect(() => {
-    const url = `${movieUrl}&page=${moviePage}&with_genres=${genreId} `;
+    const url = `${movieUrl}&page=${moviePage}&with_genres=${id} `;
     async function fetchMovies() {
       try {
         setIsLoading(true);
@@ -64,47 +80,66 @@ export default function MovieDisplay() {
       }
     }
     fetchMovies();
-  }, [moviePage, genreId]);
+  }, [moviePage, id]);
 
   useEffect(() => {
-    async function fetchGenre() {
+    if (!query) {
+      return;
+    }
+    const url = `${queryUrl}&query=${encodeURI(query)}`;
+    async function fetchData() {
       try {
-        const genre = await fetch(genreUrl).then((response) => response.json());
-        setMovieGenreList(genre.genres);
-        console.log(genre.genres);
+        setIsLoading(true);
+        const searchedMovies = await fetch(url).then((response) =>
+          response.json()
+        );
+        setQueriedMovieData(searchedMovies.results);
       } catch (error) {
-        console.log(error);
+        console.log(`Error: ${error.name}`);
       } finally {
         setIsLoading(false);
       }
     }
-    fetchGenre();
-  }, []);
-  if (!movieGenreList.length || !movieData.length) {
+    fetchData();
+  }, [query]);
+
+  if (!movieData.length) {
     return <Loader />;
   }
 
   return (
     <>
-      <Genre
-        genreList={movieGenreList}
-        genreId={genreId}
-        selectGenreHandler={selectGenreHandler}
+      <MovieSearch
+        value={value}
+        changeHandle={changeHandle}
+        submitHandle={submitHandle}
       />
-      <MovieDashBoard
-        movieData={movieData}
-        movieGenreList={movieGenreList}
-        id={genreId}
-        isLoading={isLoading}
-      />
-      <MoviePages
-        moviePage={moviePage}
-        totalPages={totalPages}
-        firstPageHandler={firstPageHandler}
-        nextPageHandler={nextPageHandler}
-        previousPageHandler={previousPageHandler}
-        lastPageHandler={lastPageHandler}
-      />
+      {value !== "" ? (
+        <SearchResult
+          movieData={query ? queriedMovieData : movieData}
+          isLoading={isLoading}
+          value={value}
+          query={query}
+        />
+      ) : null}
+      {value === "" ? (
+        <MovieDashBoard
+          movieData={movieData}
+          id={id}
+          name={name}
+          isLoading={isLoading}
+        />
+      ) : null}
+      {value === "" ? (
+        <MoviePages
+          moviePage={moviePage}
+          totalPages={totalPages}
+          firstPageHandler={firstPageHandler}
+          nextPageHandler={nextPageHandler}
+          previousPageHandler={previousPageHandler}
+          lastPageHandler={lastPageHandler}
+        />
+      ) : null}
     </>
   );
 }
