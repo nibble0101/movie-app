@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MovieDashBoard from "./MovieDashBoard";
-import MoviePages from "./MoviePages";
+import MoviePagination from "../Pagination";
 import Loader from "../Loader";
 import MovieSearch from "./MovieSearch";
 import SearchResult from "./SearchResult";
 import { useLocation } from "react-router-dom";
+import "../../styles/Footer.css";
 
 const baseUrl = "https://api.themoviedb.org/3";
 
@@ -23,35 +24,9 @@ export default function MovieDisplay() {
     state: { id, name },
   } = useLocation();
 
-  const lastPageHandler = () => {
-    if (moviePage === totalPages) {
-      return;
-    }
-    setMoviePage(totalPages);
-  };
-
-  const nextPageHandler = () => {
-    if (moviePage === totalPages) {
-      return;
-    }
-    setMoviePage((prevPage) => prevPage + 1);
-  };
-  const firstPageHandler = () => {
-    if (moviePage === 1) {
-      return;
-    }
-    setMoviePage(1);
-  };
-  const previousPageHandler = () => {
-    if (moviePage === 1) {
-      return;
-    }
-    setMoviePage((prevPage) => prevPage - 1);
-  };
-
   const changeHandle = (event) => {
     setValue(event.target.value);
-    if(query || queriedMovieData.length ){
+    if (query || queriedMovieData.length) {
       setQuery("");
       setQueriedMovieData([]);
     }
@@ -63,6 +38,9 @@ export default function MovieDisplay() {
       return;
     }
     setQuery(value);
+  };
+  const pageHandler = (page) => {
+    setMoviePage(page);
   };
 
   useEffect(() => {
@@ -131,13 +109,12 @@ export default function MovieDisplay() {
         />
       ) : null}
       {value === "" ? (
-        <MoviePages
-          moviePage={moviePage}
-          totalPages={totalPages}
-          firstPageHandler={firstPageHandler}
-          nextPageHandler={nextPageHandler}
-          previousPageHandler={previousPageHandler}
-          lastPageHandler={lastPageHandler}
+        <MoviePagination
+          activePage={moviePage}
+          itemsCountPerPage={20}
+          totalItemsCount={totalPages * 20}
+          pageRangeDisplayed={2}
+          pageChangeHandler={pageHandler}
         />
       ) : null}
     </>
