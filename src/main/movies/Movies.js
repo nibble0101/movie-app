@@ -21,7 +21,8 @@ export default function Movies() {
       (genreObj) => genreObj.name === selectedGenre
     );
     const { id, name } = genreObject;
-    history.push(`/movies/${formatUriComponent(name)}?id=${id}`, { ...genreObject });
+    const formattedName = formatUriComponent(name);
+    history.push(`/movies/${formattedName}?genre=${formattedName}&genreId=${id}`);
     return null;
   };
   useEffect(() => {

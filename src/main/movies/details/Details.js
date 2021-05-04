@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "./Image";
-
 const imageBaseUrl = "https://image.tmdb.org/t/p/original/";
 
 function Details(props) {

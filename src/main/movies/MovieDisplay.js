@@ -5,7 +5,8 @@ import Loader from "../Loader";
 import MovieSearch from "./MovieSearch";
 import SearchResult from "./SearchResult";
 import HomeIcon from "../HomeIcon";
-import { useLocation } from "react-router-dom";
+import { useLocation, Redirect } from "react-router-dom";
+import { parseQueryString } from "../../utils/utils";
 import "../../styles/Footer.css";
 
 const baseUrl = "https://api.themoviedb.org/3";
@@ -21,10 +22,9 @@ export default function MovieDisplay(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [value, setValue] = useState("");
-  const {
-    state: {id, name}
-  } = useLocation();
-  
+  const [error, setError] = useState({ hasError: false, errorMessage: "" });
+  const { genre, genreId } = parseQueryString(useLocation().search);
+
   const changeHandle = (event) => {
     setValue(event.target.value);
     if (query || queriedMovieData.length) {
@@ -45,21 +45,28 @@ export default function MovieDisplay(props) {
   };
 
   useEffect(() => {
-    const url = `${movieUrl}&page=${moviePage}&with_genres=${id}`;
+    const url = `${movieUrl}&page=${moviePage}&with_genres=${genreId}`;
     async function fetchMovies() {
       try {
         setIsLoading(true);
         const movies = await fetch(url).then((response) => response.json());
-        setMovieData(movies.results);
-        setTotalPages(movies.total_pages);
+        if (movies.results) {
+          setMovieData(movies.results);
+          setTotalPages(movies.total_pages);
+          return;
+        }
+        setError({
+          hasError: true,
+          message: "Failed to fetch movies from database",
+        });
       } catch (error) {
-        console.log(error);
+        setError({ hasError: true, message: "Unknown error has occurred" });
       } finally {
         setIsLoading(false);
       }
     }
     fetchMovies();
-  }, [moviePage, id]);
+  }, [moviePage, genreId]);
 
   useEffect(() => {
     if (!query) {
@@ -82,10 +89,29 @@ export default function MovieDisplay(props) {
     fetchData();
   }, [query]);
 
+  if (!genre || !genreId) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/error",
+          state: { message: "Missing genre or genre id" },
+        }}
+      />
+    );
+  }
+  if (error.hasError) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/error",
+          state: { message: error.message },
+        }}
+      />
+    );
+  }
   if (!movieData.length) {
     return <Loader />;
   }
-
   return (
     <>
       <HomeIcon url="/" />
@@ -105,8 +131,8 @@ export default function MovieDisplay(props) {
       {value === "" ? (
         <MovieDashBoard
           movieData={movieData}
-          genreId={id}
-          name={name}
+          genreId={genreId}
+          name={genre}
           isLoading={isLoading}
         />
       ) : null}

@@ -7,6 +7,8 @@ import TvShowDetails from "./tvshows/details/TvShowDetails";
 import PeopleDetails from "./people/details/PeopleDetails";
 import TvSearchResults from "./tvshows/search/TvSearchResults";
 import PeopleSearchResults from "./people/search/PeopleSearchResults";
+import PageNotFound from "./PageNotFound";
+import Error from "./Error";
 import { Switch, Route } from "react-router-dom";
 import MovieDisplay from "./movies/MovieDisplay";
 
@@ -21,7 +23,6 @@ function Main(props) {
         <Route exact path="/tv-show/:genre" component={TvShowDetails} />
         <Route exact path="/people" component={People} />
         <Route exact path="/people/:id" component={PeopleDetails} />
-        
 
         <Route
           exact
@@ -33,6 +34,8 @@ function Main(props) {
           path="/people/search/:name"
           component={PeopleSearchResults}
         />
+        <Route exact path="/error" component={Error} />
+        <Route component={PageNotFound} />
       </Switch>
     </div>
   );

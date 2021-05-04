@@ -45,8 +45,9 @@ function MovieDashboard(props) {
                   <Link
                     to={{
                       pathname: `/movie/${formatUriComponent(v.title)}`,
-                      search: `?id=${v.id}&genre=${genreId}`,
-                      state: { name, genreId },
+                      search: `?genre=${formatUriComponent(
+                        name
+                      )}&genreId=${genreId}&movieId=${v.id}`,
                     }}
                   >
                     <i className="fa fa-link" aria-hidden="true"></i>

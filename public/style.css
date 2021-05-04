@@ -21,6 +21,12 @@ body {
 .link{
   text-decoration: none;
 }
+.page-not-found, .error{
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
 .home-icon-wrapper{
   display: flex;
   justify-content: flex-end;
