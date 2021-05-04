@@ -4,6 +4,7 @@ import MoviePagination from "../Pagination";
 import Loader from "../Loader";
 import MovieSearch from "./MovieSearch";
 import SearchResult from "./SearchResult";
+import HomeIcon from "../HomeIcon";
 import { useLocation } from "react-router-dom";
 import "../../styles/Footer.css";
 
@@ -87,6 +88,7 @@ export default function MovieDisplay() {
 
   return (
     <>
+      <HomeIcon url="/" titleText = "To Home Page" />
       <MovieSearch
         value={value}
         changeHandle={changeHandle}

@@ -15,12 +15,11 @@ function Main(props) {
     <div className="display">
       <Switch>
         <Route exact path="/" component={Movies} />
-        <Route exact path="/movies/genre" component={MovieDisplay} />
+        <Route exact path="/movies/:genre" component={MovieDisplay} />
         <Route exact path="/tvshows/:genre" component={TvShows} />
         <Route exact path="/tvshows/:genre/:id" component={TvShowDetails} />
         <Route exact path="/people" component={People} />
         <Route exact path="/people/:id" component={PeopleDetails} />
-        <Route exact path="/movies/:genre" component={Movies} />
         <Route exact path="/movies/:genre/:id" component={MovieDetails} />
 
         <Route

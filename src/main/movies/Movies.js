@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Loader from "../Loader";
+import {formatUriComponent} from "../../utils/utils";
 import "../../styles/Movies.css";
+
 const baseUrl = "https://api.themoviedb.org/3";
 
 export default function Movies() {
@@ -18,8 +20,8 @@ export default function Movies() {
     const genreObject = genreList.find(
       (genreObj) => genreObj.name === selectedGenre
     );
-    const { id } = genreObject;
-    history.push(`/movies/genre?id=${id}`, { ...genreObject });
+    const { id, name } = genreObject;
+    history.push(`/movies/${formatUriComponent(name)}?id=${id}`, { ...genreObject });
     return null;
   };
   useEffect(() => {

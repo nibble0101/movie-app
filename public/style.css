@@ -21,6 +21,11 @@ body {
 .link{
   text-decoration: none;
 }
+.home-icon-wrapper{
+  display: flex;
+  justify-content: flex-end;
+  font-size: 2em;
+}
 .header .footer-social-media {
   color: whitesmoke;
 }
