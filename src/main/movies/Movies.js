@@ -50,12 +50,12 @@ export default function Movies() {
   return (
     <form className="genre" onSubmit={submitGenre}>
       <label htmlFor="genre">Select Genre</label>
-      <select id="genre" onChange={selectGenre} value={selectedGenre}>
+      <select id="genre" className="select" onChange={selectGenre} value={selectedGenre}>
         {genreList.map((genreObject) => {
           return <option key={genreObject.id}> {genreObject.name} </option>;
         })}
       </select>
-      <input type="submit" value="Proceed" />
+      <input type="submit" value="Proceed" className="btn" />
     </form>
   );
 }

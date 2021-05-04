@@ -13,7 +13,7 @@ const baseUrl = "https://api.themoviedb.org/3";
 const movieUrl = `${baseUrl}/discover/movie?api_key=${process.env.REACT_APP_API_KEY}`;
 const queryUrl = `${baseUrl}/search/movie?api_key=${process.env.REACT_APP_API_KEY}`;
 
-export default function MovieDisplay() {
+export default function MovieDisplay(props) {
   const [movieData, setMovieData] = useState([]);
   const [queriedMovieData, setQueriedMovieData] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
@@ -22,9 +22,9 @@ export default function MovieDisplay() {
   const [query, setQuery] = useState("");
   const [value, setValue] = useState("");
   const {
-    state: { id, name },
+    state: {id, name}
   } = useLocation();
-
+  
   const changeHandle = (event) => {
     setValue(event.target.value);
     if (query || queriedMovieData.length) {
@@ -45,7 +45,7 @@ export default function MovieDisplay() {
   };
 
   useEffect(() => {
-    const url = `${movieUrl}&page=${moviePage}&with_genres=${id} `;
+    const url = `${movieUrl}&page=${moviePage}&with_genres=${id}`;
     async function fetchMovies() {
       try {
         setIsLoading(true);
@@ -88,7 +88,7 @@ export default function MovieDisplay() {
 
   return (
     <>
-      <HomeIcon url="/" titleText = "To Home Page" />
+      <HomeIcon url="/" />
       <MovieSearch
         value={value}
         changeHandle={changeHandle}
@@ -105,7 +105,7 @@ export default function MovieDisplay() {
       {value === "" ? (
         <MovieDashBoard
           movieData={movieData}
-          id={id}
+          genreId={id}
           name={name}
           isLoading={isLoading}
         />
