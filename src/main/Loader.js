@@ -1,13 +1,22 @@
 import React from "react";
 function Loader() {
   return (
-    <div className="loader">
-      <div className="lds-ripple">
-        <div></div>
-        <div></div>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div className="loader">
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Loader
+export default Loader;

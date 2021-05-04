@@ -13,6 +13,7 @@
 
 body {
   background-color: #042224;
+  background-color: #140303;
   color: #ffffff;
   font-family: "Open Sans Condensed", sans-serif;
 }
@@ -20,7 +21,11 @@ body {
 .link{
   text-decoration: none;
 }
-
+.home-icon-wrapper{
+  display: flex;
+  justify-content: flex-end;
+  font-size: 2em;
+}
 .header .footer-social-media {
   color: whitesmoke;
 }
@@ -76,6 +81,7 @@ div.display {
   background-color: black;
   box-shadow: 2px 3px 4px black;
 }
+
 .movie-main-title {
   height: 28px;
 }
@@ -132,7 +138,7 @@ p.show-title {
 
 .show-wrapper .show {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   gap: 0.5em;
   padding: 1em;
@@ -150,6 +156,7 @@ p.show-title {
 .show-wrapper .image-wrapper {
   box-shadow: 2px 3px 10px black;
   position: relative;
+  max-width: 200px;
 }
 
 .show-wrapper .image-wrapper .title,
@@ -199,7 +206,10 @@ p.show-title {
   color: #212445;
   box-shadow: 2px 3px 4px black;
 }
-
+.pages button:focus{
+  background-color: khaki;
+  color: black;
+}
 .pages .controls {
   cursor: pointer;
   transition: all linear 500ms;

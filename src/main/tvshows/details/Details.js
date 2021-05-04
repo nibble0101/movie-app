@@ -2,7 +2,7 @@ import React from "react";
 import Image from "./Image";
 
 const imageBaseUrl = "https://image.tmdb.org/t/p/original/";
-const baseTvUrl = "https://image.tmdb.org/t/p/w300/";
+// const baseTvUrl = "https://image.tmdb.org/t/p/w300/";
 
 function Details(props) {
   let {episode_run_time} = props.details, runTime;

@@ -1,104 +1,124 @@
-import React, { useState, useEffect, useCallback } from "react";
-import MovieTitle from "./MovieTitle";
-import MovieSearch from "./MovieSearch";
-import MovieGenre from "./MovieGenre";
+import React, { useState, useEffect } from "react";
 import MovieDashBoard from "./MovieDashBoard";
-import MoviePages from "./MoviePages";
+import MoviePagination from "../Pagination";
 import Loader from "../Loader";
+import MovieSearch from "./MovieSearch";
+import SearchResult from "./SearchResult";
+import HomeIcon from "../HomeIcon";
+import { useLocation } from "react-router-dom";
+import "../../styles/Footer.css";
 
-const movieUrl =
-  "https://api.themoviedb.org/3/discover/movie?api_key=" +
-  process.env.REACT_APP_API_KEY;
-const genreUrl =
-  "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-  process.env.REACT_APP_API_KEY;
+const baseUrl = "https://api.themoviedb.org/3";
+
+const movieUrl = `${baseUrl}/discover/movie?api_key=${process.env.REACT_APP_API_KEY}`;
+const queryUrl = `${baseUrl}/search/movie?api_key=${process.env.REACT_APP_API_KEY}`;
 
 export default function MovieDisplay(props) {
-  const { state } = props.location;
   const [movieData, setMovieData] = useState([]);
-  const [movieGenreList, setMovieGenreList] = useState([]);
+  const [queriedMovieData, setQueriedMovieData] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [queryText, setQueryText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const lastPageHandler = useCallback(
-    (e) => {
-      if (moviePage === totalPages) {
-        return;
-      }
-      setMoviePage(totalPages);
-    },
-    [moviePage, totalPages]
-  );
+  const [query, setQuery] = useState("");
+  const [value, setValue] = useState("");
+  const {
+    state: {id, name}
+  } = useLocation();
   
-  const nextPageHandler = useCallback(
-    (e) => {
-      if (moviePage === totalPages) {
-        return;
-      }
-      setMoviePage((prevPage) => prevPage + 1);
-    },
-    [moviePage, totalPages]
-  );
-  const firstPageHandler = useCallback(
-    (e) => {
-      if (moviePage === 1) {
-        return;
-      }
-      setMoviePage(1);
-    },
-    [moviePage]
-  );
-  const previousPageHandler = useCallback(
-    (e) => {
-      if (moviePage === 1) {
-        return;
-      }
-      setMoviePage((prevPage) => prevPage - 1);
-    },
-    [moviePage]
-  );
-
-  const resetPage = useCallback((e) => {
-    setMoviePage(1);
-  }, []);
+  const changeHandle = (event) => {
+    setValue(event.target.value);
+    if (query || queriedMovieData.length) {
+      setQuery("");
+      setQueriedMovieData([]);
+    }
+  };
+  const submitHandle = (event) => {
+    event.preventDefault();
+    if (!value) {
+      alert("Enter movie title");
+      return;
+    }
+    setQuery(value);
+  };
+  const pageHandler = (page) => {
+    setMoviePage(page);
+  };
 
   useEffect(() => {
-    const movieGenre = +state.genreId;
-    const genre = movieGenre === 0 ? "" : "&with_genres=" + movieGenre;
-    const url = movieUrl + "&page=" + moviePage + genre;
+    const url = `${movieUrl}&page=${moviePage}&with_genres=${id}`;
     async function fetchMovies() {
-      const movies = await fetch(url).then((response) => response.json());
-      setMovieData(movies.results);
-      setTotalPages(movies.total_pages);
+      try {
+        setIsLoading(true);
+        const movies = await fetch(url).then((response) => response.json());
+        setMovieData(movies.results);
+        setTotalPages(movies.total_pages);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchMovies();
-  }, [moviePage, queryText, state.genreId]);
+  }, [moviePage, id]);
 
   useEffect(() => {
-    async function fetchGenre() {
-      const genre = await fetch(genreUrl).then((response) => response.json());
-      setMovieGenreList(genre.genres);
+    if (!query) {
+      return;
     }
-    fetchGenre();
-  }, []);
+    const url = `${queryUrl}&query=${encodeURI(query)}`;
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const searchedMovies = await fetch(url).then((response) =>
+          response.json()
+        );
+        setQueriedMovieData(searchedMovies.results);
+      } catch (error) {
+        console.log(`Error: ${error.name}`);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, [query]);
+
+  if (!movieData.length) {
+    return <Loader />;
+  }
 
   return (
-    <React.Fragment>
-      <MovieTitle />
-      <MovieGenre movieGenreList={movieGenreList} resetPage = {resetPage} />
-      <MovieSearch />
-      <MovieDashBoard movieData={movieData} movieGenreList = {movieGenreList} id = {+state.genreId} />
-      <MoviePages
-        moviePage={moviePage}
-        totalPages={totalPages}
-        firstPageHandler = {firstPageHandler}
-        nextPageHandler={nextPageHandler}
-        previousPageHandler={previousPageHandler}
-        lastPageHandler = {lastPageHandler}
+    <>
+      <HomeIcon url="/" />
+      <MovieSearch
+        value={value}
+        changeHandle={changeHandle}
+        submitHandle={submitHandle}
       />
-      {!movieData.length && isLoading && <Loader />}
-    </React.Fragment>
+      {value !== "" ? (
+        <SearchResult
+          movieData={query ? queriedMovieData : movieData}
+          isLoading={isLoading}
+          value={value}
+          query={query}
+        />
+      ) : null}
+      {value === "" ? (
+        <MovieDashBoard
+          movieData={movieData}
+          genreId={id}
+          name={name}
+          isLoading={isLoading}
+        />
+      ) : null}
+      {value === "" ? (
+        <MoviePagination
+          activePage={moviePage}
+          itemsCountPerPage={20}
+          totalItemsCount={totalPages * 20}
+          pageRangeDisplayed={2}
+          pageChangeHandler={pageHandler}
+        />
+      ) : null}
+    </>
   );
 }

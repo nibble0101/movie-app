@@ -36,6 +36,8 @@
   display: none;
 }
 
+/* Hamburger menu styling */
+
 @media screen and (max-width: 600px) {
     .header__menu {
       display: none;
