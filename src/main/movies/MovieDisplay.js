@@ -124,16 +124,18 @@ export default function MovieDisplay(props) {
         <SearchResult
           movieData={query ? queriedMovieData : movieData}
           isLoading={isLoading}
+          genreId={genreId}
+          name={genre}
           value={value}
-          query={query}
         />
       ) : null}
       {value === "" ? (
         <MovieDashBoard
           movieData={movieData}
+          isLoading={isLoading}
           genreId={genreId}
           name={genre}
-          isLoading={isLoading}
+          
         />
       ) : null}
       {value === "" ? (
