@@ -1,99 +1,184 @@
-import React, { useState, useEffect, useCallback } from "react";
-import TvSearch from "./TvSearch";
-import TvGenre from "./TvGenre";
+import React, { useReducer, useEffect } from "react";
+import SearchBar from "../SearchBar";
+import Loader from "../Loader";
 import TvDashBoard from "./TvDashBoard";
-import TvPages from "./TvPages";
+import TvSearchResults from "./TvSearchResults";
+import Pagination from "../Pagination";
+import { parseQueryString } from "../../utils/utils";
+import { useLocation, Redirect } from "react-router-dom";
 
-const genreUrl =
-  "https://api.themoviedb.org/3/genre/tv/list?api_key=" +
-  process.env.REACT_APP_API_KEY;
-const tvUrl =
-  "https://api.themoviedb.org/3/discover/tv?api_key=" +
-  process.env.REACT_APP_API_KEY;
+import {
+  SET_DATA,
+  SET_SEARCH_DATA,
+  SET_PAGE,
+  SET_TOTAL_PAGE,
+  SET_LOADING_INDICATOR,
+  SET_VALUE,
+  SET_QUERY,
+  SET_ERROR,
+  initialState,
+  tvReducer,
+} from "../reducers/tvReducer";
 
-function TvDisplay(props) {
-  const { state } = props.location;
-  const [tvData, setTvData] = useState([]);
-  const [tvGenreList, setTvGenreList] = useState([]);
-  const [tvPage, setTvPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [queryText, setQueryText] = useState("");
+const baseUrl = "https://api.themoviedb.org/3";
 
-  const lastPageHandler = useCallback(
-    (e) => {
-      if (tvPage === totalPages) {
-        return;
-      }
-      setTvPage(totalPages);
-    },
-    [tvPage, totalPages]
-  );
+const tvShowUrl = `${baseUrl}/discover/tv?api_key=${process.env.REACT_APP_API_KEY}`;
+const queryTvShowUrl = `${baseUrl}/search/tv?api_key=${process.env.REACT_APP_API_KEY}`;
 
-  const nextPageHandler = useCallback(
-    (e) => {
-      if (tvPage === totalPages) {
-        return;
-      }
-      setTvPage((prevPage) => prevPage + 1);
-    },
-    [tvPage, totalPages]
-  );
-  const firstPageHandler = useCallback(
-    (e) => {
-      if (tvPage === 1) {
-        return;
-      }
-      setTvPage(1);
-    },
-    [tvPage]
-  );
-  const previousPageHandler = useCallback(
-    (e) => {
-      if (tvPage === 1) {
-        return;
-      }
-      setTvPage((prevPage) => prevPage - 1);
-    },
-    [tvPage]
-  );
+function TvDisplay() {
+  const [state, dispatch] = useReducer(tvReducer, initialState);
+  const { genre, genreId } = parseQueryString(useLocation().search);
 
-  const resetPage = useCallback((e) => {
-    setTvPage(1);
-  }, []);
+  const changeHandle = (event) => {
+    dispatch({ type: SET_VALUE, value: event.target.value });
+    if (state.error.hasError) {
+      dispatch({ type: SET_ERROR, error: { hasError: false, message: "" } });
+    }
+    if (state.query) {
+      dispatch({ type: SET_QUERY, query: "" });
+      dispatch({ type: SET_SEARCH_DATA, searchData: [] });
+    }
+  };
+  const submitHandle = (event) => {
+    event.preventDefault();
+    if (!state.value) {
+      alert("Please enter name of personality before submitting");
+      return;
+    }
+    dispatch({ type: SET_QUERY, query: state.value });
+  };
+
+  const pageHandler = (page) => {
+    dispatch({ type: SET_PAGE, page });
+  };
 
   useEffect(() => {
-    const genre = state.genreId === 0 ? "" : "&with_genres=" + state.genreId;
-    const url = tvUrl + "&page=" + tvPage + genre;
+    const url = `${tvShowUrl}&with_genres=${genreId}&page=${state.page}`;
     async function fetchData() {
-      const tvShows = await fetch(url).then((response) => response.json());
-      setTvData(tvShows.results);
-      setTotalPages(tvShows.total_pages);
+      try {
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: true });
+        const tvShows = await fetch(url).then((response) => response.json());
+        if (!tvShows.results) {
+          dispatch({
+            type: SET_ERROR,
+            error: {
+              hasError: true,
+              message: "Failed to fetch TV shows at the moment",
+            },
+          });
+          return;
+        }
+        dispatch({ type: SET_DATA, data: tvShows.results });
+        dispatch({ type: SET_TOTAL_PAGE, totalPage: tvShows.total_pages });
+      } catch (error) {
+        dispatch({
+          type: SET_ERROR,
+          error: {
+            hasError: true,
+            message: error.message,
+          },
+        });
+      } finally {
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: false });
+      }
     }
     fetchData();
-  }, [tvPage, queryText, state.genreId]);
+  }, [state.page, genreId]);
 
   useEffect(() => {
-    async function fetchGenre() {
-      const genre = await fetch(genreUrl).then((response) => response.json());
-      setTvGenreList(genre.genres);
+    if (!state.query) {
+      return;
     }
-    fetchGenre();
-  }, []);
+    const url = `${queryTvShowUrl}&query=${encodeURI(
+      state.query
+    )}&with_genres=${genreId}`;
+    async function fetchData() {
+      try {
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: true });
+        const searchedTvShows = await fetch(url).then((response) =>
+          response.json()
+        );
+        if (!searchedTvShows.results) {
+          dispatch({
+            type: SET_ERROR,
+            error: { hasError: true, message: "Failed to fetch TV shows" },
+          });
+          return;
+        }
+        dispatch({
+          type: SET_SEARCH_DATA,
+          searchData: searchedTvShows.results,
+        });
+      } catch (error) {
+        dispatch({
+          type: SET_ERROR,
+          error: { hasError: true, message: error.message },
+        });
+      } finally {
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: false });
+      }
+    }
+    fetchData();
+  }, [state.query, genreId]);
+
+  if (!genre || !genreId) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/error",
+          state: { message: "Missing genre or genre id" },
+        }}
+      />
+    );
+  }
+  if (state.error.hasError) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/error",
+          state: { message: state.error.message },
+        }}
+      />
+    );
+  }
+  if (!state.data.length) {
+    return <Loader />;
+  }
 
   return (
-    <React.Fragment>
-      <TvGenre tvGenreList={tvGenreList} resetPage={resetPage} />
-      <TvSearch />
-      <TvDashBoard tvData={tvData} />
-      <TvPages
-        tvPage={tvPage}
-        totalPages={totalPages}
-        previousPageHandler={previousPageHandler}
-        nextPageHandler={nextPageHandler}
-        firstPageHandler={firstPageHandler}
-        lastPageHandler={lastPageHandler}
+    <>
+      <SearchBar
+        value={state.value}
+        placeholder="Enter TV show title"
+        changeHandle={changeHandle}
+        submitHandle={submitHandle}
       />
-    </React.Fragment>
+      {state.value === "" ? (
+        <TvDashBoard
+          tvData={state.data}
+          genre={genre}
+          genreId={genreId}
+          isLoading={state.isLoading}
+        />
+      ) : (
+        <TvSearchResults
+          tvData={state.query ? state.searchData : state.data}
+          genre={genre}
+          genreId={genreId}
+          isLoading={state.isLoading}
+          value={state.value}
+        />
+      )}
+      {state.value === "" ? (
+        <Pagination
+          activePage={state.page}
+          itemsCountPerPage={20}
+          totalItemsCount={state.totalPage * 20}
+          pageRangeDisplayed={2}
+          pageChangeHandler={pageHandler}
+        />
+      ) : null}
+    </>
   );
 }
 export default TvDisplay;

@@ -36,6 +36,10 @@ export default function MovieDisplay(props) {
     if (state.error.hasError) {
       dispatch({ type: SET_ERROR, error: { hasError: false, message: "" } });
     }
+    if(state.query){
+      dispatch({ type: SET_QUERY, query: ""});
+      dispatch({ type: SET_SEARCH_DATA, searchData: []});
+    }
   };
   const submitHandle = (event) => {
     event.preventDefault();
@@ -52,7 +56,7 @@ export default function MovieDisplay(props) {
   };
 
   useEffect(() => {
-    const url = `${movieUrl}&page=${state.page}}&with_genres=${genreId}`;
+    const url = `${movieUrl}&page=${state.page}&with_genres=${genreId}`;
     async function fetchMovies() {
       try {
         dispatch({ type: SET_LOADING_INDICATOR, isLoading: true });
@@ -82,7 +86,7 @@ export default function MovieDisplay(props) {
     if (!state.query) {
       return;
     }
-    const url = `${queryUrl}&query=${encodeURI(state.query)}`;
+    const url = `${queryUrl}&query=${encodeURI(state.query)}&with_genres=${genreId}`;
     async function fetchData() {
       try {
         dispatch({ type: SET_LOADING_INDICATOR, isLoading: true });
@@ -107,7 +111,7 @@ export default function MovieDisplay(props) {
       }
     }
     fetchData();
-  }, [state.query]);
+  }, [state.query, genreId]);
 
   if (!genre || !genreId) {
     return (
@@ -132,7 +136,6 @@ export default function MovieDisplay(props) {
   if (!state.data.length) {
     return <Loader />;
   }
-  console.log(state)
   return (
     <>
       <HomeIcon url="/" />
@@ -147,14 +150,14 @@ export default function MovieDisplay(props) {
           movieData={state.data}
           isLoading={state.isLoading}
           genreId={genreId}
-          name={genre}
+          genre={genre}
         />
       ) : (
         <SearchResult
           movieData={state.query ? state.searchData : state.data}
           isLoading={state.isLoading}
           genreId={genreId}
-          name={genre}
+          genre={genre}
           value={state.value}
         />
       )}

@@ -12,16 +12,16 @@ function MovieDetails(props) {
     episode_run_time: [],
     spoken_languages: [],
   });
-  const { genre, genreId, movieId } = parseQueryString(useLocation().search);
+  const { genre, genreId, id } = parseQueryString(useLocation().search);
 
   useEffect(() => {
-    const url = `${baseUrl}/${movieId}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`;
+    const url = `${baseUrl}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`;
     async function fetchDetails() {
       const details = await fetch(url).then((response) => response.json());
       setDetails(details);
     }
     fetchDetails();
-  }, [movieId]);
+  }, [id]);
   return (
     <>
       <DetailsHomeIcon url = {`/movies/${genre}?genre=${genre}&genreId=${genreId}`} />

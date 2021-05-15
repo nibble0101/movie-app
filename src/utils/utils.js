@@ -15,7 +15,7 @@ export const formatUriComponent = (str) => {
  */
 
 export const parseQueryString = (queryString) => {
-  if (queryString.trim() === "") return { genre: "", genreId: "", movieId: "" };
+  if (queryString.trim() === "") return { genre: "", genreId: "", id: "" };
   return queryString
     .trim()
     .slice(1)

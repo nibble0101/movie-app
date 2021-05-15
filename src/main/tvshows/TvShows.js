@@ -22,11 +22,11 @@ export default function Movies() {
     );
     const { id, name } = genreObject;
     const formattedName = formatUriComponent(name);
-    history.push(`/movies/${formattedName}?genre=${formattedName}&genreId=${id}`);
+    history.push(`/tvshows/${formattedName}?genre=${formattedName}&genreId=${id}`);
     return null;
   };
   useEffect(() => {
-    const genreUrl = `${baseUrl}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`;
+    const genreUrl = `${baseUrl}/genre/tv/list?api_key=${process.env.REACT_APP_API_KEY}`;
     async function fetchGenre() {
       try {
         setIsLoading(true);

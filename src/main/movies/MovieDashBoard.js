@@ -8,7 +8,7 @@ const altUrl =
   "https://cdn.pixabay.com/photo/2017/02/23/21/35/cinema-2093264_960_720.jpg";
 
 function MovieDashboard(props) {
-  const { movieData, genreId, name, isLoading } = props;
+  const { movieData, genreId, genre, isLoading } = props;
 
   if (isLoading) {
     return <Loader />;
@@ -46,8 +46,8 @@ function MovieDashboard(props) {
                     to={{
                       pathname: `/movie/${formatUriComponent(v.title)}`,
                       search: `?genre=${formatUriComponent(
-                        name
-                      )}&genreId=${genreId}&movieId=${v.id}`,
+                        genre
+                      )}&genreId=${genreId}&id=${v.id}`,
                     }}
                   >
                     <i className="fa fa-link" aria-hidden="true"></i>

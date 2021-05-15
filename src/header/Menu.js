@@ -25,20 +25,12 @@ function Menu(props) {
         className="header__menu"
       >
         <li id="movies" className="header__menu-item">
-          <NavLink
-            exact
-            to={{ pathname: "/", state: { genreId: 0 } }}
-            className="link link--menu-link"
-          >
+          <NavLink exact to="/" className="link link--menu-link">
             Movies
           </NavLink>
         </li>
         <li id="tv" className="header__menu-item">
-          <NavLink
-            exact
-            to={{ pathname: "/tvshows/all", state: { genreId: 0 } }}
-            className="link link--menu-link"
-          >
+          <NavLink exact to="/tv" className="link link--menu-link">
             TV Shows
           </NavLink>
         </li>
