@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import PeopleTitle from "./PeopleTitle";
-import PeopleSearch from "./PeopleSearch";
+import SearchBar from "../SearchBar";
 import PeopleDashBoard from "./PeopleDashBoard";
 import PeopleSearchResults from "./PeopleSearchResults";
 import Pagination from "../Pagination";
@@ -110,8 +110,9 @@ export default function PeopleDisplay() {
   return (
     <>
       <PeopleTitle />
-      <PeopleSearch
+      <SearchBar
         value={state.value}
+        placeholder="Enter personality name"
         changeHandle={changeHandle}
         submitHandle={submitHandle}
       />

@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import MovieDashBoard from "./MovieDashBoard";
 import MoviePagination from "../Pagination";
 import Loader from "../Loader";
-import MovieSearch from "./MovieSearch";
+import SearchBar from "../SearchBar";
 import SearchResult from "./SearchResult";
 import HomeIcon from "../HomeIcon";
 import { useLocation, Redirect } from "react-router-dom";
@@ -136,8 +136,9 @@ export default function MovieDisplay(props) {
   return (
     <>
       <HomeIcon url="/" />
-      <MovieSearch
+      <SearchBar
         value={state.value}
+        placeholder="Enter movie title"
         changeHandle={changeHandle}
         submitHandle={submitHandle}
       />

@@ -1,16 +1,16 @@
 import React from "react";
+import "../styles/Search.css";
 
-export default function PeopleSearch(props) {
-  const { value, submitHandle, changeHandle } = props;
+export default function MovieSearch(props) {
   return (
     <div className="search">
-      <form onSubmit={submitHandle}>
+      <form onSubmit={props.submitHandle}>
         <input
           type="text"
           name="search"
-          value={value}
-          onChange={changeHandle}
-          placeholder="Enter name of personality"
+          value={props.value}
+          onChange={props.changeHandle}
+          placeholder={props.placeholder}
           className="search__text-input"
         />
         <input type="submit" className="search__submit-input" value="Submit" />
