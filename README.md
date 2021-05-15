@@ -1,6 +1,9 @@
 # FilmMaze
 
+[![Github actions CI](https://github.com/nibble0101/FilmMaze/actions/workflows/build.yaml/badge.svg)](https://github.com/nibble0101/FilmMaze/actions/workflows/build.yaml)
+
 FilmMaze is a Single Page Application (SPA) built using HTML, CSS and [React.js](https://reactjs.org/). It displays a list of:
+
 1. Movies
 2. TV Shows and
 3. Personalities in the movie industry
@@ -13,9 +16,9 @@ The data is obtained from [The Movie Database API](https://developers.themoviedb
 
 ## Dependencies
 
-This project was built using [react](https://reactjs.org/), [react-hambuger-menu](https://www.npmjs.com/package/react-hamburger-menu), [react-router-dom](https://www.npmjs.com/package/react-router-dom)  and [react-reveal](https://www.npmjs.com/package/react-reveal) for the animations. For other dependencies, look at the package.json file.
+This project was built using [react](https://reactjs.org/), [react-hambuger-menu](https://www.npmjs.com/package/react-hamburger-menu), [react-router-dom](https://www.npmjs.com/package/react-router-dom) and [react-reveal](https://www.npmjs.com/package/react-reveal) for the animations. For other dependencies, look at the package.json file.
 
-## Live Project 
+## Live Project
 
 The project is hosted live on [Netlify](https://www.netlify.com/). You can check it out [Here](https://filmmaze.netlify.app/).
 
