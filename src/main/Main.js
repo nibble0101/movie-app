@@ -1,12 +1,12 @@
 import React from "react";
 import Movies from "./movies/Movies";
-import People from "./people/PeopleDisplay";
+import People from "./people/People";
 import TvShows from "./tvshows/TvDisplay";
 import MovieDetails from "./movies/details/MovieDetails";
 import TvShowDetails from "./tvshows/details/TvShowDetails";
 import PeopleDetails from "./people/details/PeopleDetails";
 import TvSearchResults from "./tvshows/search/TvSearchResults";
-import PeopleSearchResults from "./people/search/PeopleSearchResults";
+import PeopleSearchResults from "./people/PeopleSearchResults";
 import PageNotFound from "./PageNotFound";
 import Error from "./Error";
 import { Switch, Route } from "react-router-dom";

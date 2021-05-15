@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import MovieDashBoard from "./MovieDashBoard";
 import MoviePagination from "../Pagination";
 import Loader from "../Loader";
@@ -9,85 +9,105 @@ import { useLocation, Redirect } from "react-router-dom";
 import { parseQueryString } from "../../utils/utils";
 import "../../styles/Footer.css";
 
+import {
+  SET_DATA,
+  SET_SEARCH_DATA,
+  SET_PAGE,
+  SET_TOTAL_PAGE,
+  SET_LOADING_INDICATOR,
+  SET_VALUE,
+  SET_QUERY,
+  SET_ERROR,
+  initialState,
+  movieReducer,
+} from "../reducers/movieReducer";
+
 const baseUrl = "https://api.themoviedb.org/3";
 
 const movieUrl = `${baseUrl}/discover/movie?api_key=${process.env.REACT_APP_API_KEY}`;
 const queryUrl = `${baseUrl}/search/movie?api_key=${process.env.REACT_APP_API_KEY}`;
 
 export default function MovieDisplay(props) {
-  const [movieData, setMovieData] = useState([]);
-  const [queriedMovieData, setQueriedMovieData] = useState([]);
-  const [moviePage, setMoviePage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState("");
-  const [value, setValue] = useState("");
-  const [error, setError] = useState({ hasError: false, errorMessage: "" });
+  const [state, dispatch] = useReducer(movieReducer, initialState);
   const { genre, genreId } = parseQueryString(useLocation().search);
 
   const changeHandle = (event) => {
-    setValue(event.target.value);
-    if (query || queriedMovieData.length) {
-      setQuery("");
-      setQueriedMovieData([]);
+    dispatch({ type: SET_VALUE, value: event.target.value });
+    if (state.error.hasError) {
+      dispatch({ type: SET_ERROR, error: { hasError: false, message: "" } });
     }
   };
   const submitHandle = (event) => {
     event.preventDefault();
-    if (!value) {
-      alert("Enter movie title");
+    if (!state.value) {
+      alert("Please enter name of personality before submitting");
       return;
     }
-    setQuery(value);
+    dispatch({ type: SET_QUERY, query: state.value });
   };
+
   const pageHandler = (page) => {
-    setMoviePage(page);
+    console.log(page)
+    dispatch({ type: SET_PAGE, page });
   };
 
   useEffect(() => {
-    const url = `${movieUrl}&page=${moviePage}&with_genres=${genreId}`;
+    const url = `${movieUrl}&page=${state.page}}&with_genres=${genreId}`;
     async function fetchMovies() {
       try {
-        setIsLoading(true);
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: true });
         const movies = await fetch(url).then((response) => response.json());
-        if (movies.results) {
-          setMovieData(movies.results);
-          setTotalPages(movies.total_pages);
+        if (!movies.results) {
+          dispatch({
+            type: SET_ERROR,
+            error: { hasError: true, message: "Failed to fetch data" },
+          });
           return;
         }
-        setError({
-          hasError: true,
-          message: "Failed to fetch movies from database",
-        });
+        dispatch({ type: SET_DATA, data: movies.results });
+        dispatch({ type: SET_TOTAL_PAGE, totalPage: movies.total_pages });
       } catch (error) {
-        setError({ hasError: true, message: "Unknown error has occurred" });
+        dispatch({
+          type: SET_ERROR,
+          error: { hasError: true, message: error.message },
+        });
       } finally {
-        setIsLoading(false);
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: false });
       }
     }
     fetchMovies();
-  }, [moviePage, genreId]);
+  }, [state.page, genreId]);
 
   useEffect(() => {
-    if (!query) {
+    if (!state.query) {
       return;
     }
-    const url = `${queryUrl}&query=${encodeURI(query)}`;
+    const url = `${queryUrl}&query=${encodeURI(state.query)}`;
     async function fetchData() {
       try {
-        setIsLoading(true);
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: true });
         const searchedMovies = await fetch(url).then((response) =>
           response.json()
         );
-        setQueriedMovieData(searchedMovies.results);
+        if (!searchedMovies.results) {
+          dispatch({
+            type: SET_ERROR,
+            error: { hasError: true, message: "Failed to fetch data" },
+          });
+          return;
+        }
+        dispatch({ type: SET_SEARCH_DATA, searchData: searchedMovies.results });
       } catch (error) {
-        console.log(`Error: ${error.name}`);
+        dispatch({
+          type: SET_ERROR,
+          error: { hasError: true, message: error.message },
+        });
       } finally {
-        setIsLoading(false);
+        dispatch({ type: SET_LOADING_INDICATOR, isLoading: false });
       }
     }
     fetchData();
-  }, [query]);
+  }, [state.query]);
 
   if (!genre || !genreId) {
     return (
@@ -99,50 +119,49 @@ export default function MovieDisplay(props) {
       />
     );
   }
-  if (error.hasError) {
+  if (state.error.hasError) {
     return (
       <Redirect
         to={{
           pathname: "/error",
-          state: { message: error.message },
+          state: { message: state.error.message },
         }}
       />
     );
   }
-  if (!movieData.length) {
+  if (!state.data.length) {
     return <Loader />;
   }
+  console.log(state)
   return (
     <>
       <HomeIcon url="/" />
       <MovieSearch
-        value={value}
+        value={state.value}
         changeHandle={changeHandle}
         submitHandle={submitHandle}
       />
-      {value !== "" ? (
-        <SearchResult
-          movieData={query ? queriedMovieData : movieData}
-          isLoading={isLoading}
-          genreId={genreId}
-          name={genre}
-          value={value}
-        />
-      ) : null}
-      {value === "" ? (
+      {state.value === "" ? (
         <MovieDashBoard
-          movieData={movieData}
-          isLoading={isLoading}
+          movieData={state.data}
+          isLoading={state.isLoading}
           genreId={genreId}
           name={genre}
-          
         />
-      ) : null}
-      {value === "" ? (
+      ) : (
+        <SearchResult
+          movieData={state.query ? state.searchData : state.data}
+          isLoading={state.isLoading}
+          genreId={genreId}
+          name={genre}
+          value={state.value}
+        />
+      )}
+      {state.value === "" ? (
         <MoviePagination
-          activePage={moviePage}
+          activePage={state.page}
           itemsCountPerPage={20}
-          totalItemsCount={totalPages * 20}
+          totalItemsCount={state.totalPage * 20}
           pageRangeDisplayed={2}
           pageChangeHandler={pageHandler}
         />

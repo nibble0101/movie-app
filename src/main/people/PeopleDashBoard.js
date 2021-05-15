@@ -23,7 +23,7 @@ function PeopleDashboard(props) {
                   src={v.profile_path ? baseMovieUrl + v.profile_path : altUrl}
                   alt={v.name}
                   width="200"
-                  height="30"
+                  height="300"
                 />
                 <p className="title">
                   <span className="label"> Name:</span> {v.name}
