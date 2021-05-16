@@ -1,5 +1,7 @@
 import React from "react";
-function Loader() {
+import "../styles/Loader.css";
+
+export default function Loader() {
   return (
     <div
       style={{
@@ -18,5 +20,3 @@ function Loader() {
     </div>
   );
 }
-
-export default Loader;
