@@ -18,6 +18,26 @@ export default function PaginationWrapper(props) {
         itemClass="pagination__list-item"
         itemClassFirst="pagination--first-list-item"
         itemClassLast="pagination--last-list-item"
+        nextPageText={
+          <>
+            <i className="fas fa-angle-right"></i>
+          </>
+        }
+        prevPageText={
+          <>
+            <i className="fas fa-angle-left"></i>
+          </>
+        }
+        firstPageText={
+          <>
+            <i className="fas fa-angle-double-left"></i>
+          </>
+        }
+        lastPageText={
+          <>
+            <i className="fas fa-angle-double-right"></i>
+          </>
+        }
       />
     </div>
   );
