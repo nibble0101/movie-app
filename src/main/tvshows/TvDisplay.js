@@ -3,6 +3,7 @@ import SearchBar from "../SearchBar";
 import Loader from "../Loader";
 import TvDashBoard from "./TvDashBoard";
 import TvSearchResults from "./TvSearchResults";
+import HomeIcon  from "../HomeIcon";
 import Pagination from "../Pagination";
 import { parseQueryString } from "../../utils/utils";
 import { useLocation, Redirect } from "react-router-dom";
@@ -147,6 +148,7 @@ function TvDisplay() {
 
   return (
     <>
+      <HomeIcon url="/tv" />
       <SearchBar
         value={state.value}
         placeholder="Enter TV show title"

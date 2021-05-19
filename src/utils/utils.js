@@ -26,3 +26,12 @@ export const parseQueryString = (queryString) => {
       return parsedQueryStringObject;
     }, {});
 };
+
+/**
+ * Replace & char with and in str 
+ * @param {string} str 
+ * @returns {string}
+ */
+export const formatGenre = (str) => {
+  return str.replace("&", "and");
+};
