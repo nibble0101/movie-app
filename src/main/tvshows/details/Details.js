@@ -1,18 +1,29 @@
 import React from "react";
 import Image from "./Image";
 import HomeIcon from "../../HomeIcon";
+import { useLocation } from "react-router-dom";
+
+import { formatUriComponent, parseQueryString } from "../../../utils/utils";
 
 const imageBaseUrl = "https://image.tmdb.org/t/p/original/";
-// const baseTvUrl = "https://image.tmdb.org/t/p/w300/";
 
-function Details(props) {
-  let {episode_run_time} = props.details, runTime;
-  if(episode_run_time.length > 1){
-      runTime = "Between " + episode_run_time[0] + " and " + episode_run_time[1] + " minutes";
-  }else if(episode_run_time.length === 1){
-       runTime = episode_run_time[0] + " minutes";
-  }else{
-       runTime = "Not available"
+export default function Details(props) {
+  const { genreId, genre } = parseQueryString(useLocation().search);
+  const formattedName = formatUriComponent(genre);
+  const path = `/tvshows/${formattedName}?genre=${formattedName}&genreId=${genreId}`;
+  let { episode_run_time } = props.details,
+    runTime;
+  if (episode_run_time.length > 1) {
+    runTime =
+      "Between " +
+      episode_run_time[0] +
+      " and " +
+      episode_run_time[1] +
+      " minutes";
+  } else if (episode_run_time.length === 1) {
+    runTime = episode_run_time[0] + " minutes";
+  } else {
+    runTime = "Not available";
   }
   return (
     <section
@@ -24,35 +35,43 @@ function Details(props) {
       }}
     >
       <div className="overlay"></div>
-      <HomeIcon url = "/tv" />
+      <HomeIcon url={path} />
       <div className="wrapper">
         <Image src={props.details.poster_path} />
         <div className="details-text">
           <h1>{props.details.original_name} </h1>
           <p className="tag-line"> {props.details.type} </p>
-          <div className = "fine-details">
+          <div className="fine-details">
             <p className="episodes">
-              <span className = "label"> Episodes: </span>  {props.details.number_of_episodes}
+              <span className="label"> Episodes: </span>{" "}
+              {props.details.number_of_episodes}
             </p>
             <p className="seasons">
-            <span className = "label"> Seasons: </span> {props.details.number_of_seasons}
+              <span className="label"> Seasons: </span>{" "}
+              {props.details.number_of_seasons}
             </p>
             <p className="episode-run-time">
-            <span className = "label"> Episode runtime: </span> 
-               {runTime}
+              <span className="label"> Episode runtime: </span>
+              {runTime}
             </p>
             <p className="sub-genres">
-            <span className = "label"> Genre: </span>
-               
+              <span className="label"> Genre: </span>
+
               {props.details.genres.map((subGenre, index) => {
-                  if(index){
-                      return <span key={`${subGenre.id}${index}`}>, {subGenre.name} </span>
-
-                  }else{
-                    return <span key={`${subGenre.id}${index}`}> {subGenre.name} </span>
-
-                  }
-                
+                if (index) {
+                  return (
+                    <span key={`${subGenre.id}${index}`}>
+                      , {subGenre.name}{" "}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span key={`${subGenre.id}${index}`}>
+                      {" "}
+                      {subGenre.name}{" "}
+                    </span>
+                  );
+                }
               })}
             </p>
           </div>
@@ -90,5 +109,3 @@ function Details(props) {
     </section>
   );
 }
-
-export default Details;

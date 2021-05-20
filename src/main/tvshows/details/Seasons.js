@@ -1,10 +1,10 @@
-import React, { useRef, useCallback } from "react";
-const baseImageUrl = "https://image.tmdb.org/t/p/original/";
+import React, { useRef } from "react";
+// const baseImageUrl = "https://image.tmdb.org/t/p/original/";
 function Seasons(props) {
   const accordionRef = useRef();
   const accordionSymbolRef = useRef();
   const firstSeasonRef = useRef();
-  const clickHandler = useCallback((e) => {
+  const clickHandler =(e) => {
     if (accordionRef.current.style.maxHeight) {
       accordionRef.current.style.maxHeight = null;
       accordionSymbolRef.current.innerHTML = "&#43;";
@@ -14,7 +14,7 @@ function Seasons(props) {
       accordionRef.current.style.overflow = "scroll";
       accordionSymbolRef.current.innerHTML = "&#8722;";
     }
-  });
+  };
   return (
     <div className="season-wrapper">
       <h2 className="seasons-header">
