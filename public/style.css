@@ -26,11 +26,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-.home-icon-wrapper{
-  display: flex;
-  justify-content: flex-end;
-  font-size: 2em;
-}
+
 .header .footer-social-media {
   color: whitesmoke;
 }
@@ -117,9 +113,6 @@ div.display {
 .details {
   position: relative;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .overlay {
   position: absolute;

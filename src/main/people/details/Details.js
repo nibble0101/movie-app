@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "./Image";
+import HomeIcon from "../../HomeIcon";
 
 const imageBaseUrl = "https://image.tmdb.org/t/p/original/";
 
@@ -14,6 +15,7 @@ function Details(props) {
       }}
     >
       <div className="overlay"></div>
+      <HomeIcon url="" />
       <div className="wrapper">
         <Image src={props.details.profile_path} />
         <div className="details-text">
@@ -21,11 +23,20 @@ function Details(props) {
           <hr />
           <div>
             <h2> Birthday </h2>
-            <p>{props.details.birthday ? props.details.birthday: "Not Available" }</p>
+            <p>
+              {props.details.birthday
+                ? props.details.birthday
+                : "Not Available"}
+            </p>
           </div>
           <div>
             <h2> Place of birth </h2>
-            <p> {props.details.place_of_birth ? props.details.place_of_birth : "Not Available"}</p>
+            <p>
+              {" "}
+              {props.details.place_of_birth
+                ? props.details.place_of_birth
+                : "Not Available"}
+            </p>
           </div>
           {props.details.deathday && (
             <div>
@@ -33,15 +44,18 @@ function Details(props) {
               <p> {props.details.deathday}</p>
             </div>
           )}
-           <div>
+          <div>
             <h2> Biography </h2>
-            <p> {props.details.biography ? props.details.biography : "Not Available"}</p>
+            <p>
+              {" "}
+              {props.details.biography
+                ? props.details.biography
+                : "Not Available"}
+            </p>
           </div>
           <div>
             <h2> Known for </h2>
-            <p>
-              {props.details.known_for_department}
-            </p>
+            <p>{props.details.known_for_department}</p>
           </div>
           <hr />
           {props.details.homepage && (

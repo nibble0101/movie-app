@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "./Image";
+import HomeIcon from "../../HomeIcon";
 const imageBaseUrl = "https://image.tmdb.org/t/p/original/";
 
 function Details(props) {
@@ -13,6 +14,7 @@ function Details(props) {
       }}
     >
       <div className="overlay"></div>
+      <HomeIcon url = {`/movies/${props.genre}?genre=${props.genre}&genreId=${props.genreId}`} />
       <div className="wrapper">
         <Image src={props.details.poster_path} />
         <div className="details-text">

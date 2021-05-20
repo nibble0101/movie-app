@@ -1,0 +1,7 @@
+.home-icon-wrapper{
+    position: relative;
+    z-index: 20;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 2em;
+}

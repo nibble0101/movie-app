@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Details from "./Details";
-import DetailsHomeIcon from "../DetailsHomeIcon";
 import { parseQueryString } from "../../../utils/utils";
 const baseUrl = "https://api.themoviedb.org/3/movie";
 
@@ -24,8 +23,7 @@ function MovieDetails(props) {
   }, [id]);
   return (
     <>
-      <DetailsHomeIcon url = {`/movies/${genre}?genre=${genre}&genreId=${genreId}`} />
-      <Details details={details} />
+      <Details details={details} genre={genre} genreId={genreId} />
     </>
   );
 }
